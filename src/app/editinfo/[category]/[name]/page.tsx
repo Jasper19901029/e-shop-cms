@@ -1,13 +1,15 @@
 "use client";
+import error from "next/error";
+import { Suspense } from "react";
 import { getDriedFruitsData, getFruitsData } from "../../getData";
 import EditProduct from "./Editproduct";
+import Error from "./error";
 
 export function generateStaticParams() {
   const { fruitsData } = getFruitsData();
   return (
     fruitsData &&
     fruitsData.map((product) => ({
-      // category: decodeURI(product.name),
       category: product.category,
       name: product.name,
     }))
@@ -18,14 +20,42 @@ export default function Page({
   params,
 }: {
   params: { category: string; name: string };
-}) {
+}): React.ReactNode {
   const { category, name } = params;
-  console.log(decodeURI(category));
-  console.log(decodeURI(name));
-  const { fruitsData } = getFruitsData();
-  const filterData = fruitsData?.filter(
-    (product) => product.name === decodeURI(name)
-  );
-  console.log(filterData);
-  return <div>{filterData && <EditProduct {...filterData[0]} />}</div>;
+  if (decodeURI(category) === "水果") {
+    const { fruitsData } = getFruitsData();
+    const filterData = fruitsData?.filter(
+      (product) => product.name === decodeURI(name)
+    );
+
+    return (
+      <div>
+        {filterData !== undefined && filterData.length > 0 ? (
+          <Suspense fallback={<p>Loading...</p>}>
+            <EditProduct {...filterData[0]} />
+          </Suspense>
+        ) : (
+          <Error />
+        )}
+      </div>
+    );
+  }
+  if (decodeURI(category) === "果乾") {
+    const { driedFruitsData } = getDriedFruitsData();
+    const filterData = driedFruitsData?.filter(
+      (product) => product.name === decodeURI(name)
+    );
+
+    return (
+      <div>
+        {filterData !== undefined && filterData.length > 0 ? (
+          <Suspense fallback={<p>Loading...</p>}>
+            <EditProduct {...filterData[0]} />
+          </Suspense>
+        ) : (
+          <Error />
+        )}
+      </div>
+    );
+  }
 }

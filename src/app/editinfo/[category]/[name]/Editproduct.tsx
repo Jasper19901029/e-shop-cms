@@ -171,7 +171,7 @@ export default function EditProduct({
           )}
         </div>
       </div>
-      <button className="ml-2">確定修改</button>
+      <button className="ml-2 border-2 border-black">確定修改</button>
     </form>
   );
 }
