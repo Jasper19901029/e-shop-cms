@@ -1,3 +1,3 @@
-export default function Finished(): JSX.Element {
-  return <div>Finished</div>;
+export default function Finished(): React.ReactNode {
+  return <div>finished</div>;
 }

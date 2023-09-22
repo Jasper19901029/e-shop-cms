@@ -2,7 +2,9 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Error() {
+import Link from "next/link";
+
+export default function NotFound() {
   const router = useRouter();
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -13,5 +15,11 @@ export default function Error() {
   const goBackToEditInfo = () => {
     router.push("/editinfo");
   };
-  return <div>nothing to show, go back to the edit page on ten seconds.</div>;
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find the page. Back to Editinfo page after 3 seconds.</p>
+      <Link href="/editinfo">Return Editinfo page right now.</Link>
+    </div>
+  );
 }

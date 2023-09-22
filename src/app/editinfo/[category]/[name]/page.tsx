@@ -1,20 +1,22 @@
 "use client";
-import error from "next/error";
-import { Suspense } from "react";
 import { getDriedFruitsData, getFruitsData } from "../../getData";
 import EditProduct from "./Editproduct";
-import Error from "./error";
+import { notFound } from "next/navigation";
+import NotFound from "./not-found";
+import { db, Product } from "../../../../utils/filebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import React from "react";
 
-export function generateStaticParams() {
-  const { fruitsData } = getFruitsData();
-  return (
-    fruitsData &&
-    fruitsData.map((product) => ({
-      category: product.category,
-      name: product.name,
-    }))
-  );
-}
+// export function generateStaticParams() {
+//   const { fruitsData } = getFruitsData();
+//   return (
+//     fruitsData &&
+//     fruitsData.map((product) => ({
+//       category: product.category,
+//       name: product.name,
+//     }))
+//   );
+// }
 
 export default function Page({
   params,
@@ -22,6 +24,7 @@ export default function Page({
   params: { category: string; name: string };
 }): React.ReactNode {
   const { category, name } = params;
+
   if (decodeURI(category) === "水果") {
     const { fruitsData } = getFruitsData();
     const filterData = fruitsData?.filter(
@@ -30,12 +33,12 @@ export default function Page({
 
     return (
       <div>
-        {filterData !== undefined && filterData.length > 0 ? (
-          <Suspense fallback={<p>Loading...</p>}>
-            <EditProduct {...filterData[0]} />
-          </Suspense>
+        {filterData === undefined ? (
+          <Loading />
+        ) : filterData.length > 0 ? (
+          <EditProduct {...filterData[0]} />
         ) : (
-          <Error />
+          notFound()
         )}
       </div>
     );
@@ -48,14 +51,21 @@ export default function Page({
 
     return (
       <div>
-        {filterData !== undefined && filterData.length > 0 ? (
-          <Suspense fallback={<p>Loading...</p>}>
-            <EditProduct {...filterData[0]} />
-          </Suspense>
+        {filterData === undefined ? (
+          <Loading />
+        ) : filterData.length > 0 ? (
+          <EditProduct {...filterData[0]} />
         ) : (
-          <Error />
+          notFound()
         )}
+        {/* {filterData && filterData.length > 0 && (
+          <EditProduct {...filterData[0]} />
+        )} */}
       </div>
     );
   }
 }
+
+const Loading = (): React.ReactNode => {
+  return <>Loading...</>;
+};
