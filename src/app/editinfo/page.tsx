@@ -10,12 +10,18 @@ export default function EditInfo(): ReactNode {
   const { fruitsData } = getFruitsData();
 
   return (
-    <div className="w-[1000px] h-[600px] bg-[white]">
+    <div className="w-[80vw] h-[80vh] bg-[pink] m-auto">
+      <h2 className="text-2xl mb-4">編輯頁面</h2>
+      <span className="border-2 border-black rounded w-[50px] block text-center mb-4">
+        水果
+      </span>
       {fruitsData &&
         fruitsData.map((product) => (
           <Poductinfo key={product.name} {...product} />
         ))}
-
+      <span className="border-2 border-black rounded w-[50px] block text-center">
+        果乾
+      </span>
       {driedFruitsData &&
         driedFruitsData.map((product) => (
           <Poductinfo key={product.name} {...product} />

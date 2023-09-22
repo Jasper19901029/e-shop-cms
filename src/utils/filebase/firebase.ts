@@ -100,9 +100,7 @@ export const getProducts = async (): Promise<DocumentData[]> => {
   const querySnapshot = await getDocs(collection(db, "水果"));
   // console.log("1", querySnapshot);
   const data = querySnapshot.docs.map((doc) => {
-    console.log(doc.id);
     return doc.data();
   });
-  console.log("3", data);
   return data;
 };

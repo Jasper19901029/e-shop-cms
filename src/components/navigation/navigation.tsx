@@ -14,6 +14,9 @@ export default function Navigation(): JSX.Element {
       <Link className="my-2" href="/finished">
         已完成訂單
       </Link>
+      <Link className="my-2" href="/immgtest">
+        已完成訂單rr
+      </Link>
     </div>
   );
 }
