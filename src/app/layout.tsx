@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-row">
+      <body className="flex flex-col lg:flex-row lg:justify-between">
         <Navigation />
         {children}
       </body>

@@ -5,5 +5,5 @@ type Props = {
 };
 
 export default function AddProductlayout({ children }: Props) {
-  return <>{children}</>;
+  return <div className="">{children}</div>;
 }

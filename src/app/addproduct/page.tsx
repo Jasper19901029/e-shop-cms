@@ -99,13 +99,16 @@ export default function AddProduct(): ReactNode {
     setInspectionImage2Key((pre) => pre + Math.random() * 10);
   };
 
+  // h2 :text-[25px] mt-[30px]
+  // 1 div:w-[85vw] h-[80vh] bg-[white] flex text-[20px]
+  //產品名字、產品價格、產品單位、產品類別、產品數量:rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]
   return (
     <div>
-      <h2 className="text-[25px] mt-[30px]">新增產品</h2>
-      <div className="w-[85vw] h-[80vh] bg-[white] flex text-[20px]">
+      <h2 className="">新增產品</h2>
+      <div className="">
         <form onSubmit={onSubmitToFirebase} className="m-auto">
           <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
+            className=""
             label="產品名字"
             id="name"
             name="name"
@@ -117,7 +120,7 @@ export default function AddProduct(): ReactNode {
             required
           />
           <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
+            className=""
             label="產品價格"
             id="price"
             name="price"
@@ -129,7 +132,7 @@ export default function AddProduct(): ReactNode {
             required
           />
           <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
+            className=""
             label="產品單位"
             id="unit"
             name="unit"
@@ -141,7 +144,7 @@ export default function AddProduct(): ReactNode {
             required
           />
           <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
+            className=""
             label="產品類別"
             id="type"
             name="type"
@@ -153,7 +156,7 @@ export default function AddProduct(): ReactNode {
             required
           />
           <Input
-            className="brounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
+            className=""
             label="產品數量"
             id="quantity"
             name="quantity"
@@ -165,11 +168,15 @@ export default function AddProduct(): ReactNode {
             onChange={handlerChange}
             required
           />
-          <fieldset className="flex flex-row">
+          {/* 
+            fieldset:flex flex-row 
+            fieldset內input:border-2 border-slider border-black ml-2 mb-2 w-[35px]
+          */}
+          <fieldset className="">
             <legend>
               產品類別:
               <Input
-                className="border-2 border-slider border-black ml-2 mb-2 w-[35px] "
+                className=""
                 label="水果"
                 id="水果"
                 name="category"
@@ -181,7 +188,7 @@ export default function AddProduct(): ReactNode {
                 checked={category === "水果"}
               />
               <Input
-                className="border-2 border-slider border-black ml-2 mb-2 w-[35px] "
+                className=""
                 label="果乾"
                 id="果乾"
                 name="category"
@@ -194,8 +201,13 @@ export default function AddProduct(): ReactNode {
               />
             </legend>
           </fieldset>
-          <div className="flex items-center">
-            <label htmlFor="introduction" className="mt-4 w-[100px]">
+          {/*
+            div:flex items-center
+            label:mt-4 w-[100px]
+            textarea:w-[500px] h-[150px] border-2 border-slider border-black mb-2 resize-none
+          */}
+          <div className="">
+            <label htmlFor="introduction" className="">
               產品介紹:
             </label>
             <textarea
@@ -203,13 +215,17 @@ export default function AddProduct(): ReactNode {
               onChange={handleTextAreaChange}
               name="introduction"
               value={introduction}
-              className="w-[500px] h-[150px] border-2 border-slider border-black mb-2 resize-none"
+              className=""
             />
           </div>
           <div>
-            <label className="mr-2 w-[200px] text-center">產品圖片上傳:</label>
+            {/* 
+              label:mr-2 w-[200px] text-center
+              input:ml-2 mb-2 w-[200px]
+            */}
+            <label className="">產品圖片上傳:</label>
             <input
-              className="ml-2 mb-2 w-[200px]"
+              className=""
               id="productUrl"
               name="productUrl"
               type="file"
@@ -219,9 +235,13 @@ export default function AddProduct(): ReactNode {
               required
             />
             <div>
-              <label className="mr-2 w-[150px]">檢驗報告上傳:</label>
+              {/* 
+                label:mr-2 w-[200px] text-center
+                input:ml-2 mb-2 w-[200px]
+              */}
+              <label className="">檢驗報告上傳:</label>
               <input
-                className="ml-2 mb-2 w-[200px]"
+                className=""
                 id="inspectionUrl1"
                 name="inspectionUrl1"
                 type="file"
@@ -232,9 +252,13 @@ export default function AddProduct(): ReactNode {
               />
             </div>
             <div>
-              <label className="mr-2 w-[150px]">檢驗報告上傳:</label>
+              {/*
+                label:mr-2 w-[200px] text-center
+                input:ml-2 mb-2 w-[200px]
+              */}
+              <label className="">檢驗報告上傳:</label>
               <input
-                className="ml-2 mb-2 w-[200px]"
+                className=""
                 id="inspectionUrl2"
                 name="inspectionUrl2"
                 type="file"
@@ -245,12 +269,11 @@ export default function AddProduct(): ReactNode {
               />
             </div>
           </div>
-          <button className="border-2 border-slider border-black mr-2 hover:text-white hover:bg-black">
-            新增產品
-          </button>
-          <button
-            className="border-2 border-slider border-black mr-2 hover:text-white hover:bg-black"
-            onClick={reset}>
+          {/* 
+            button:border-2 border-slider border-black mr-2 hover:text-white hover:bg-black
+          */}
+          <button className="">新增產品</button>
+          <button className="" onClick={reset}>
             清空
           </button>
         </form>
