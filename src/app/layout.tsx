@@ -17,9 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col lg:flex-row lg:justify-between">
+      <body className="flex flex-col lg:flex-row">
         <Navigation />
-        {children}
+        <div className="h-full w-full lg:basis-[calc(100%-200px)]">
+          {children}
+        </div>
       </body>
     </html>
   );

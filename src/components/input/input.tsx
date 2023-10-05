@@ -11,38 +11,28 @@ export type InputProps = {
   value?: string | number;
   defaultValue?: string | number;
   min?: number;
-  className: string;
   checked?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
-
-export const InputFile = forwardRef<
-  HTMLInputElement,
-  InputHTMLAttributes<HTMLInputElement>
->(({ ...rest }, ref) => {
-  return (
-    <div>
-      <label>圖片上傳</label>
-      <input {...rest} ref={ref} />
-    </div>
-  );
-});
 
 export default function Input({ ...rest }: InputProps): ReactNode {
   if (rest.type === "radio") {
     return (
       <>
-        <input {...rest} />
+        <input {...rest} className="mx-4" />
         <label htmlFor={rest.htmlFor}>{rest.label}</label>
       </>
     );
   }
   return (
     <div className="">
-      <label className="mr-2 w-[100px]" htmlFor={rest.htmlFor}>
+      <label className="mr-4 w-[100px]" htmlFor={rest.htmlFor}>
         {rest.label}:
       </label>
-      <input {...rest} />
+      <input
+        {...rest}
+        className="lg:appearance-none appearance-none border-2 border-slider border-black rounded-[4px] focus:outline-none focus:border-blue-500"
+      />
     </div>
   );
 }
