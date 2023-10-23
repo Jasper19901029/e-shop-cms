@@ -25,24 +25,6 @@ export default function Page({
 }): React.ReactNode {
   const { category, name } = params;
 
-  if (decodeURI(category) === "水果") {
-    const { fruitsData } = useGetFruitsData();
-    const filterData = fruitsData?.filter(
-      (product) => product.name === decodeURI(name)
-    );
-
-    return (
-      <div>
-        {filterData === undefined ? (
-          <Loading />
-        ) : filterData.length > 0 ? (
-          <EditProduct {...filterData[0]} />
-        ) : (
-          notFound()
-        )}
-      </div>
-    );
-  }
   if (decodeURI(category) === "果乾") {
     const { driedFruitsData } = useGetDriedFruitsData();
     const filterData = driedFruitsData?.filter(
@@ -58,9 +40,25 @@ export default function Page({
         ) : (
           notFound()
         )}
-        {/* {filterData && filterData.length > 0 && (
+      </div>
+    );
+  }
+
+  if (decodeURI(category) === "水果") {
+    const { fruitsData } = useGetFruitsData();
+    const filterData = fruitsData?.filter(
+      (product) => product.name === decodeURI(name)
+    );
+
+    return (
+      <div>
+        {filterData === undefined ? (
+          <Loading />
+        ) : filterData.length > 0 ? (
           <EditProduct {...filterData[0]} />
-        )} */}
+        ) : (
+          notFound()
+        )}
       </div>
     );
   }
