@@ -9,13 +9,12 @@ export default function EditInfo(): ReactNode {
 
   return (
     <div className="w-[1000px] h-[600px] bg-[white]">
-      {fruitsData &&
-        fruitsData.map((product) => (
-          <Poductinfo key={product.name} {...product} />
-        ))}
-
       {driedFruitsData &&
         driedFruitsData.map((product) => (
+          <Poductinfo key={product.name} {...product} />
+        ))}
+      {fruitsData &&
+        fruitsData.map((product) => (
           <Poductinfo key={product.name} {...product} />
         ))}
     </div>
