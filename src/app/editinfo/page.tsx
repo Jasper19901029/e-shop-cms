@@ -10,23 +10,25 @@ export default function EditInfo(): ReactNode {
   const { fruitsData } = getFruitsData();
 
   return (
-    <div className="w-[80vw] h-[80vh] bg-[pink] m-auto">
-      <h2 className="text-2xl mb-4">編輯頁面</h2>
-      <span className="border-2 border-black rounded w-[50px] block text-center mb-4">
-        水果
-      </span>
+    <>
+      {" "}
+      <div className="w-full flex justify-around mt-4 text-center items-center">
+        <span className="w-[100px] before:content-['產品'] before:lg:content-['產品名稱']"></span>
+        <span className="w-[80px] before:content-['價格'] before:lg:content-['現在價格']"></span>
+        <span className="w-[80px] before:content-['庫存'] before:lg:content-['現有庫存']"></span>
+        <span className="w-[50px] before:content-['單位'] before:lg:content-['單位']"></span>
+        <span className="w-[80px] before:content-['編輯'] before:lg:content-['編輯頁面']"></span>
+        <span className="w-[80px] before:content-['刪除'] before:lg:content-['刪除']"></span>
+      </div>
       {fruitsData &&
         fruitsData.map((product) => (
           <Poductinfo key={product.name} {...product} />
         ))}
-      <span className="border-2 border-black rounded w-[50px] block text-center">
-        果乾
-      </span>
       {driedFruitsData &&
         driedFruitsData.map((product) => (
           <Poductinfo key={product.name} {...product} />
         ))}
-    </div>
+    </>
   );
 }
 

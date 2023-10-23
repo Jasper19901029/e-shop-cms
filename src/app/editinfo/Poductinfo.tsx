@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Product, editProduct } from "@/utils/filebase/firebase";
-import { ReactNode } from "react";
+import { Product, delProduct } from "@/utils/filebase/firebase";
+import { ReactNode, useState } from "react";
 
 export default function Poductinfo({
   name,
@@ -13,20 +13,59 @@ export default function Poductinfo({
   introduction,
   isSell,
 }: Product): ReactNode {
+  const [isDel, setIsDel] = useState<boolean>(false);
+
   return (
-    <div className="flex flex-row justify-between border-b-[1px] border-black">
-      <p>{name}</p>
-      <p>
-        現在價格: {price}/{unit}
-      </p>
-      <p>
-        現有數量: {quantity}
-        {unit}
-      </p>
-      <button className={`{${isSell} ? bg-green-500 : bg-red-500}`}></button>
-      <button className="border-2 hover:bg-slate-400">
+    <div className="flex justify-around text-center odd:bg-gray-200 even:my-2 static">
+      <p className="w-[100px]">{name}</p>
+      <p className="w-[80px] ">{price}</p>
+      <p className="w-[80px]">{quantity}</p>
+      <p className="w-[50px]">{unit}</p>
+      <button className="w-[80px]">
         <Link href={`/editinfo/${category}/${name}`}>編輯</Link>
       </button>
+      <div>
+        <button
+          className="w-[80px] text-[red] "
+          onClick={() => setIsDel(!isDel)}>
+          x
+        </button>
+        {isDel && (
+          <ConfirmDelete
+            name={name}
+            category={category}
+            isDel={isDel}
+            setIsDel={setIsDel}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function ConfirmDelete({
+  name,
+  category,
+  isDel,
+  setIsDel,
+}: {
+  name: string;
+  category: string;
+  isDel: boolean;
+  setIsDel: React.Dispatch<React.SetStateAction<boolean>>;
+}): ReactNode {
+  const checkDelete = async (category: string, name: string): Promise<void> => {
+    await delProduct(category, name);
+  };
+  return (
+    <div className="absolute bg-[gray] w-[200px] h-[100px] top-100 right-20 flex flex-col justify-around">
+      <h2>
+        確認刪除<span className="text-[red]"> {name}</span>?
+      </h2>
+      <div className="flex flex-row justify-around ">
+        <button onClick={() => checkDelete(name, category)}>確認</button>
+        <button onClick={() => setIsDel(!isDel)}>取消</button>
+      </div>
     </div>
   );
 }

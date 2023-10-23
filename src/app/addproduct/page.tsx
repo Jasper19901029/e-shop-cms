@@ -100,116 +100,114 @@ export default function AddProduct(): ReactNode {
   };
 
   return (
-    <div>
-      <h2 className="text-[25px] mt-[30px]">新增產品</h2>
-      <div className="w-[85vw] h-[80vh] bg-[white] flex text-[20px]">
-        <form onSubmit={onSubmitToFirebase} className="m-auto">
-          <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
-            label="產品名字"
-            id="name"
-            name="name"
-            type="text"
-            htmlFor="name"
-            placeholder="請輸入產品名字"
-            value={name}
-            onChange={handlerChange}
-            required
-          />
-          <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
-            label="產品價格"
-            id="price"
-            name="price"
-            type="number"
-            htmlFor="price"
-            placeholder="請輸入產品價格"
-            value={price}
-            onChange={handlerChange}
-            required
-          />
-          <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
-            label="產品單位"
-            id="unit"
-            name="unit"
-            type="text"
-            htmlFor="unit"
-            placeholder="請輸入產品單位"
-            value={unit}
-            onChange={handlerChange}
-            required
-          />
-          <Input
-            className="rounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
-            label="產品類別"
-            id="type"
-            name="type"
-            type="text"
-            htmlFor="type"
-            placeholder="請輸入產品類別"
-            value={type}
-            onChange={handlerChange}
-            required
-          />
-          <Input
-            className="brounded-[4px] border-2 border-slider border-black focus:outline-none focus:border-blue-800 ml-2 mb-2 w-[150px]"
-            label="產品數量"
-            id="quantity"
-            name="quantity"
-            type="number"
-            htmlFor="quantity"
-            placeholder="請輸入產品數量"
-            min={0}
-            value={quantity}
-            onChange={handlerChange}
-            required
-          />
-          <fieldset className="flex flex-row">
-            <legend>
-              產品類別:
-              <Input
-                className="border-2 border-slider border-black ml-2 mb-2 w-[35px] "
-                label="水果"
-                id="水果"
-                name="category"
-                type="radio"
-                htmlFor="水果"
-                value="水果"
-                onChange={handlerChange}
-                required
-                checked={category === "水果"}
-              />
-              <Input
-                className="border-2 border-slider border-black ml-2 mb-2 w-[35px] "
-                label="果乾"
-                id="果乾"
-                name="category"
-                type="radio"
-                htmlFor="果乾"
-                value="果乾"
-                onChange={handlerChange}
-                required
-                checked={category === "果乾"}
-              />
-            </legend>
-          </fieldset>
-          <div className="flex items-center">
-            <label htmlFor="introduction" className="mt-4 w-[100px]">
-              產品介紹:
-            </label>
-            <textarea
-              id="introduction"
-              onChange={handleTextAreaChange}
-              name="introduction"
-              value={introduction}
-              className="w-[500px] h-[150px] border-2 border-slider border-black mb-2 resize-none"
+    <div className="mt-4">
+      <form
+        onSubmit={onSubmitToFirebase}
+        className="flex flex-col space-y-6 lg:space-y-10">
+        <Input
+          label="產品名字"
+          id="name"
+          name="name"
+          type="text"
+          htmlFor="name"
+          placeholder="請輸入產品名字"
+          value={name}
+          onChange={handlerChange}
+          required
+        />
+        <Input
+          label="產品價格"
+          id="price"
+          name="price"
+          type="number"
+          htmlFor="price"
+          placeholder="請輸入產品價格"
+          value={price === 0 ? "" : price}
+          onChange={handlerChange}
+          required
+        />
+        <Input
+          label="產品單位"
+          id="unit"
+          name="unit"
+          type="text"
+          htmlFor="unit"
+          placeholder="請輸入產品單位"
+          value={unit}
+          onChange={handlerChange}
+          required
+        />
+        <Input
+          label="產品類別"
+          id="type"
+          name="type"
+          type="text"
+          htmlFor="type"
+          placeholder="請輸入產品類別"
+          value={type}
+          onChange={handlerChange}
+          required
+        />
+        <Input
+          label="產品數量"
+          id="quantity"
+          name="quantity"
+          type="number"
+          htmlFor="quantity"
+          placeholder="請輸入產品數量"
+          min={0}
+          value={quantity === 0 ? "" : quantity}
+          onChange={handlerChange}
+          required
+        />
+
+        <fieldset className="">
+          <legend>
+            產品類別:
+            <Input
+              label="水果"
+              id="水果"
+              name="category"
+              type="radio"
+              htmlFor="水果"
+              value="水果"
+              onChange={handlerChange}
+              required
+              checked={category === "水果"}
             />
-          </div>
-          <div>
-            <label className="mr-2 w-[200px] text-center">產品圖片上傳:</label>
+            <Input
+              label="果乾"
+              id="果乾"
+              name="category"
+              type="radio"
+              htmlFor="果乾"
+              value="果乾"
+              onChange={handlerChange}
+              required
+              checked={category === "果乾"}
+            />
+          </legend>
+        </fieldset>
+
+        <div className="flex flex-row">
+          <label htmlFor="introduction" className="self-center mr-4">
+            產品介紹:
+          </label>
+          <textarea
+            id="introduction"
+            onChange={handleTextAreaChange}
+            name="introduction"
+            value={introduction}
+            className="w-[250px] h-[60px] border-2 border-slider border-black resize-none rounded-[8px] lg:w-[500px] lg:h-[150px] focus:outline-none focus:border-blue-500"
+            placeholder="請輸入產品介紹"
+            required
+          />
+        </div>
+        <div className="flex flex-col space-y-2">
+          <label className="">
+            產品圖片上傳:{" "}
             <input
-              className="ml-2 mb-2 w-[200px]"
+              className=""
               id="productUrl"
               name="productUrl"
               type="file"
@@ -218,43 +216,48 @@ export default function AddProduct(): ReactNode {
               onChange={handleInputToStorage}
               required
             />
-            <div>
-              <label className="mr-2 w-[150px]">檢驗報告上傳:</label>
-              <input
-                className="ml-2 mb-2 w-[200px]"
-                id="inspectionUrl1"
-                name="inspectionUrl1"
-                type="file"
-                key={inspectionImage1Key}
-                ref={inspectionImage1Ref}
-                onChange={handleInputToStorage}
-                required
-              />
-            </div>
-            <div>
-              <label className="mr-2 w-[150px]">檢驗報告上傳:</label>
-              <input
-                className="ml-2 mb-2 w-[200px]"
-                id="inspectionUrl2"
-                name="inspectionUrl2"
-                type="file"
-                key={inspectionImage2Key}
-                ref={inspectionImage2Ref}
-                onChange={handleInputToStorage}
-                required
-              />
-            </div>
-          </div>
-          <button className="border-2 border-slider border-black mr-2 hover:text-white hover:bg-black">
+          </label>
+
+          <label className="">
+            檢驗報告上傳:{" "}
+            <input
+              className=""
+              id="inspectionUrl1"
+              name="inspectionUrl1"
+              type="file"
+              key={inspectionImage1Key}
+              ref={inspectionImage1Ref}
+              onChange={handleInputToStorage}
+              required
+            />
+          </label>
+
+          <label className="">
+            檢驗報告上傳:{" "}
+            <input
+              className=""
+              id="inspectionUrl2"
+              name="inspectionUrl2"
+              type="file"
+              key={inspectionImage2Key}
+              ref={inspectionImage2Ref}
+              onChange={handleInputToStorage}
+              required
+            />
+          </label>
+        </div>
+
+        <div className="flex flex-row justify-around text-[20px]">
+          <button className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px]">
             新增產品
           </button>
           <button
-            className="border-2 border-slider border-black mr-2 hover:text-white hover:bg-black"
+            className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px]"
             onClick={reset}>
             清空
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }
