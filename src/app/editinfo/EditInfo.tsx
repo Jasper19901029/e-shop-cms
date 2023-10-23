@@ -1,11 +1,11 @@
 "use client";
 import { ReactNode } from "react";
 import Poductinfo from "./Poductinfo";
-import { getDriedFruitsData, getFruitsData } from "./getData";
+import { useGetDriedFruitsData, useGetFruitsData } from "./getData";
 
 export default function EditInfo(): ReactNode {
-  const { driedFruitsData } = getDriedFruitsData();
-  const { fruitsData } = getFruitsData();
+  const { driedFruitsData } = useGetDriedFruitsData();
+  const { fruitsData } = useGetFruitsData();
 
   return (
     <div className="w-[1000px] h-[600px] bg-[white]">

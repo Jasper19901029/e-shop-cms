@@ -1,5 +1,5 @@
 "use client";
-import { getDriedFruitsData, getFruitsData } from "../../getData";
+import { useGetDriedFruitsData, useGetFruitsData } from "../../getData";
 import EditProduct from "./Editproduct";
 import { notFound } from "next/navigation";
 import NotFound from "./not-found";
@@ -26,7 +26,7 @@ export default function Page({
   const { category, name } = params;
 
   if (decodeURI(category) === "水果") {
-    const { fruitsData } = getFruitsData();
+    const { fruitsData } = useGetFruitsData();
     const filterData = fruitsData?.filter(
       (product) => product.name === decodeURI(name)
     );
@@ -44,7 +44,7 @@ export default function Page({
     );
   }
   if (decodeURI(category) === "果乾") {
-    const { driedFruitsData } = getDriedFruitsData();
+    const { driedFruitsData } = useGetDriedFruitsData();
     const filterData = driedFruitsData?.filter(
       (product) => product.name === decodeURI(name)
     );
