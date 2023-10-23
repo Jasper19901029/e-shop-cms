@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { db, Product } from "../../utils/filebase/firebase";
 import { query, onSnapshot, collection } from "firebase/firestore";
 
-export const getDriedFruitsData = () => {
+export const useGetDriedFruitsData = () => {
   const [isDriedFruit, setIsDriedFruit] = useState(false);
   const [driedFruitsData, setDriedFruitsData] = useState<Product[]>();
 
@@ -33,7 +33,7 @@ export const getDriedFruitsData = () => {
   return { driedFruitsData };
 };
 
-export const getFruitsData = () => {
+export const useGetFruitsData = () => {
   const [isFruit, setIsFruit] = useState(false);
   const [fruitsData, setFruitsData] = useState<Product[]>();
 
