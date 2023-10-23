@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navigation from "@/components/navigation/navigation";
 
+import { SignInProvider } from "@/components/sign-in/signin";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col lg:flex-row">
-        <Navigation />
-        <div className="h-full w-full lg:basis-[calc(100%-200px)]">
-          {children}
-        </div>
+        <SignInProvider>
+          <Navigation />
+          <div className="h-full w-full lg:basis-[calc(100%-200px)]">
+            {children}
+          </div>
+        </SignInProvider>
       </body>
     </html>
   );

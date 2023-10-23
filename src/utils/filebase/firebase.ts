@@ -3,18 +3,20 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   getFirestore,
   collection,
-  collectionGroup,
   doc,
   setDoc,
   updateDoc,
-  addDoc,
   getDocs,
   DocumentData,
-  onSnapshot,
-  query,
-  where,
-  Unsubscribe,
+  deleteDoc,
 } from "firebase/firestore";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -32,6 +34,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 export const db = getFirestore();
+export const auth = getAuth();
 
 export type Product = {
   name: string;
@@ -71,33 +74,6 @@ export const addNewProduct = async (product: Product): Promise<void> => {
   }
 };
 
-// export const getProducts = async (): Promise<DocumentData[]> => {
-//   const querySnapshot = await getDocs(collection(db, "產品"));
-//   const data = querySnapshot.docs.map((doc) => doc.data());
-//   return data;
-// };
-
-/////////////////////////////////////////////////////////////////////////
-//更新資料(待修正)
-// export const editProduct = async (
-//   product: UpdateProduct
-// ): Promise<void> => {
-//   const { 普通香蕉 } = product;
-
-//   const collectionRef = collection(db, "產品");
-//   await updateDoc(doc(collectionRef, product.name), product.普通香蕉); // 找不到直接新增新欄位
-//   await updateDoc(
-//     doc(collectionRef, product.name), "普通香蕉",    product.普通香蕉); //會整個蓋掉
-//   await updateDoc(doc(collectionRef, product.name), "普通香蕉", { product }); //會直接在普通香蕉下面新增一個完整product
-//   await updateDoc(doc(collectionRef, product.name), "普通香蕉", product); //會直接在普通香蕉下面新增一個完整product
-// };
-
-// export declare type UpdateData<T> = T extends Primitive ? T : T extends {} ? {
-//   [K in keyof T]?: UpdateData<T[K]> | FieldValue;
-// } & NestedUpdateFields<T> : Partial<T>;
-
-// export declare type Primitive = string | number | boolean | undefined | null;
-
 export const getProducts = async (): Promise<DocumentData[]> => {
   const querySnapshot = await getDocs(collection(db, "水果"));
   // console.log("1", querySnapshot);
@@ -106,3 +82,24 @@ export const getProducts = async (): Promise<DocumentData[]> => {
   });
   return data;
 };
+
+export const delProduct = async (
+  name: string,
+  category: string
+): Promise<void> => {
+  const collectionRef = collection(db, category);
+  deleteDoc(doc(collectionRef, name));
+};
+
+export const signInAuthUserWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
+};
+
+// signInAuthUserWithEmailAndPassword("test@gmail.com", "123412345").then((data) =>
+//   console.log(data)
+// );

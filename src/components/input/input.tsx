@@ -6,7 +6,7 @@ export type InputProps = {
   id: string;
   htmlFor: string;
   required?: true;
-  type: "text" | "number" | "radio";
+  type: "text" | "number" | "radio" | "email" | "password";
   placeholder?: string;
   value?: string | number;
   defaultValue?: string | number;

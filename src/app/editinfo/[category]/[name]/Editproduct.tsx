@@ -7,6 +7,7 @@ import {
   uploadToStorage,
 } from "@/utils/filebase/firebase";
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function EditProduct({
   name,
@@ -34,6 +35,7 @@ export default function EditProduct({
     inspectionUrl1: inspectionUrl1,
     inspectionUrl2: inspectionUrl2,
   });
+  const router = useRouter();
 
   const [productImage, setProductImage] = useState<File>();
   const [inspectionImage1, setInspectionImage1] = useState<File>();
@@ -85,93 +87,107 @@ export default function EditProduct({
       });
 
       alert("修改成功");
+      router.push("/editinfo");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <form onSubmit={onSubmitToFirebase} className="flex flex-col">
-      <span className="w-[100px]">{name}</span>
-      <Input
-        className="border-2 border-slider border-black-500 mr-2 w-[100px] "
-        label="價格"
-        id="price"
-        name="price"
-        type="text"
-        htmlFor="price"
-        placeholder="請輸入要修改的金額"
-        onChange={handlerChange}
-      />
-      <span>現在的金額:{price}</span>
-      <span className="w-[100px]">/{unit}</span>
-      <Input
-        className="border-2 border-slider border-black-500 mr-2 w-[100px]"
-        label="數量"
-        id="quantity"
-        name="quantity"
-        type="text"
-        htmlFor="quantity"
-        placeholder="請輸入要修改的數量"
-        onChange={handlerChange}
-      />
-      <span>
-        現在的數量:{quantity}
-        {unit}
-      </span>
-      <div className="flex items-center">
-        <label htmlFor="introduction" className="mt-4 w-[100px]">
-          產品介紹:
-        </label>
-        <textarea
-          id="introduction"
-          onChange={handleTextAreaChange}
-          name="introduction"
-          value={introduction}
-          className="w-[500px] h-[150px] border-2 border-slider border-black mb-2 resize-none"
-        />
-      </div>
-      <div>
-        <label className="mr-2 w-[200px] text-center">產品圖片上傳:</label>
-        <input
-          className="ml-2 mb-2 w-[200px]"
-          id="productUrl"
-          name="productUrl"
-          type="file"
-          ref={productImageRef}
-          onChange={handleInputToStorage}
-        />
-        <Image src={productUrl} width={100} height={100} alt="hi" />
-        <div>
-          <label className="mr-2 w-[150px]">檢驗報告上傳:</label>
-          <input
-            className="ml-2 mb-2 w-[200px]"
-            id="inspectionUrl1"
-            name="inspectionUrl1"
-            type="file"
-            ref={inspectionImage1Ref}
-            onChange={handleInputToStorage}
+    <div>
+      <form
+        onSubmit={onSubmitToFirebase}
+        className="flex flex-col space-y-6 lg:space-y-10 items-center">
+        <div className="flex flex-col space-y-6 lg:space-y-10">
+          <Input
+            label="產品名稱"
+            id="name"
+            name="name"
+            type="text"
+            htmlFor="name"
+            placeholder={name}
+            onChange={handlerChange}
           />
-          {inspectionUrl1 && (
-            <Image src={inspectionUrl1} width={100} height={100} alt="hi" />
-          )}
-        </div>
-        <div>
-          <label className="mr-2 w-[150px]">檢驗報告上傳:</label>
-          <input
-            className="ml-2 mb-2 w-[200px]"
-            id="inspectionUrl2"
-            name="inspectionUrl2"
-            type="file"
-            ref={inspectionImage2Ref}
-            onChange={handleInputToStorage}
+          <Input
+            label="產品價格"
+            id="price"
+            name="price"
+            type="text"
+            htmlFor="price"
+            placeholder={`現在的金額:${price}元/${unit}`}
+            onChange={handlerChange}
           />
-          {inspectionUrl2 && (
-            <Image src={inspectionUrl2} width={100} height={100} alt="hi" />
-          )}
+          <Input
+            label="產品數量"
+            id="quantity"
+            name="quantity"
+            type="text"
+            htmlFor="quantity"
+            placeholder={`現在的數量:${quantity}${unit}`}
+            onChange={handlerChange}
+          />
+
+          <div className="flex flex-row">
+            <label htmlFor="introduction" className="self-center mr-4">
+              產品介紹:
+            </label>
+            <textarea
+              id="introduction"
+              onChange={handleTextAreaChange}
+              name="introduction"
+              defaultValue={introduction}
+              className="w-[250px] h-[60px] border-2 border-slider border-black resize-none rounded-[8px] lg:w-[500px] lg:h-[150px] focus:outline-none focus:border-blue-500"
+            />
+          </div>
         </div>
-      </div>
-      <button className="ml-2 border-2 border-black">確定修改</button>
-    </form>
+        <div className="flex flex-col lg:flex-row">
+          <label htmlFor="productUrl" className="">
+            產品圖片上傳:
+            <input
+              className=""
+              id="productUrl"
+              name="productUrl"
+              type="file"
+              ref={productImageRef}
+              onChange={handleInputToStorage}
+            />
+            <Image src={productUrl} width={300} height={300} alt="hi" />
+          </label>
+
+          <label htmlFor="inspectionUrl1" className="">
+            檢驗報告上傳:
+            <input
+              className=""
+              id="inspectionUrl1"
+              name="inspectionUrl1"
+              type="file"
+              ref={inspectionImage1Ref}
+              onChange={handleInputToStorage}
+            />
+            {inspectionUrl1 && (
+              <Image src={inspectionUrl1} width={300} height={300} alt="hi" />
+            )}
+          </label>
+
+          <label htmlFor="inspectionUrl2" className="">
+            檢驗報告上傳:
+            <input
+              className=""
+              id="inspectionUrl2"
+              name="inspectionUrl2"
+              type="file"
+              ref={inspectionImage2Ref}
+              onChange={handleInputToStorage}
+            />
+            {inspectionUrl2 && (
+              <Image src={inspectionUrl2} width={300} height={300} alt="hi" />
+            )}
+          </label>
+        </div>
+        <button className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px] text-[20px]">
+          確定修改
+        </button>
+      </form>
+    </div>
   );
 }
