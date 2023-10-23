@@ -48,7 +48,7 @@ export const useGetFruitsData = () => {
   }, [isFruit]);
 
   useEffect(() => {
-    const q = query(collection(db, "果乾"));
+    const q = query(collection(db, "水果"));
     const unsub = onSnapshot(q, (doc) => {
       doc.docChanges().forEach((doc) => {
         if (doc.type === "modified") {
