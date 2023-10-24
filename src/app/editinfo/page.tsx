@@ -3,11 +3,17 @@ import { ReactNode, useState, useEffect } from "react";
 
 import Poductinfo from "./Poductinfo";
 
-import { useGetDriedFruitsData, useGetFruitsData } from "./getData";
+import {
+  useGetDriedFruitsData,
+  useGetFruitsData,
+  useGetProduct,
+} from "./getData";
 
 export default function EditInfo(): ReactNode {
   const { driedFruitsData } = useGetDriedFruitsData();
   const { fruitsData } = useGetFruitsData();
+  const fruitProduct = useGetProduct("水果");
+  const driedFruitProduct = useGetProduct("果乾");
 
   return (
     <>
@@ -20,12 +26,20 @@ export default function EditInfo(): ReactNode {
         <span className="w-[80px] before:content-['編輯'] before:lg:content-['編輯頁面']"></span>
         <span className="w-[80px] before:content-['刪除'] before:lg:content-['刪除']"></span>
       </div>
-      {fruitsData &&
+      {/* {fruitsData &&
         fruitsData.map((product) => (
           <Poductinfo key={product.name} {...product} />
         ))}
       {driedFruitsData &&
         driedFruitsData.map((product) => (
+          <Poductinfo key={product.name} {...product} />
+        ))} */}
+      {driedFruitProduct.productData &&
+        driedFruitProduct.productData.map((product) => (
+          <Poductinfo key={product.name} {...product} />
+        ))}
+      {fruitProduct.productData &&
+        fruitProduct.productData.map((product) => (
           <Poductinfo key={product.name} {...product} />
         ))}
     </>

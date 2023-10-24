@@ -99,15 +99,9 @@ export default function EditProduct({
         onSubmit={onSubmitToFirebase}
         className="flex flex-col space-y-6 lg:space-y-10 items-center">
         <div className="flex flex-col space-y-6 lg:space-y-10">
-          <Input
-            label="產品名稱"
-            id="name"
-            name="name"
-            type="text"
-            htmlFor="name"
-            placeholder={name}
-            onChange={handlerChange}
-          />
+          <p>
+            產品名稱: <span className="ml-4">{name}</span>
+          </p>
           <Input
             label="產品價格"
             id="price"
