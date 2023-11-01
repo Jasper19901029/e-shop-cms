@@ -6,6 +6,7 @@ export default function Navigation(): JSX.Element {
       <Link href="/addproduct">新增產品</Link>
       <Link href="/editinfo">編輯產品</Link>
       <Link href="/finished">已完成訂單</Link>
+      <Link href="/testpage">測試頁</Link>
     </div>
   );
 }
