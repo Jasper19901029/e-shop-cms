@@ -105,9 +105,12 @@ export default function TestPage(): React.ReactNode {
         body: JSON.stringify(downloadTestData),
       }
     );
-    console.log(downloadData);
+    const res = await downloadData.blob();
+    const url = URL.createObjectURL(res);
+    window.open(url, "_blank");
+    console.log(res);
     // const res = await downloadData.blob();
-    window.open(downloadData.url, "_blank");
+    // window.open(downloadData, "_blank");
     // console.log(res);
   };
 
