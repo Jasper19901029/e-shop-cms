@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Product, delProduct } from "@/utils/filebase/firebase";
+import { Product, delProduct, editIsSell } from "@/utils/filebase/firebase";
 import { ReactNode, useState } from "react";
 
 export default function Poductinfo({
@@ -14,6 +14,14 @@ export default function Poductinfo({
   isSell,
 }: Product): ReactNode {
   const [isDel, setIsDel] = useState<boolean>(false);
+  const [changeSell, setChangeSell] = useState<boolean>(isSell);
+  const toggleIsSell = async (
+    name: string,
+    category: string,
+    isSell: boolean
+  ) => {
+    await editIsSell(name, category, !isSell);
+  };
 
   return (
     <div className="flex justify-around text-center odd:bg-gray-200 even:my-2 static">
@@ -21,9 +29,17 @@ export default function Poductinfo({
       <p className="w-[80px] ">{price}</p>
       <p className="w-[80px]">{quantity}</p>
       <p className="w-[50px]">{unit}</p>
+
       <button className="w-[80px]">
         <Link href={`/editinfo/${category}/${name}`}>編輯</Link>
       </button>
+      {/* <div className=""> */}
+      <button
+        className={isSell ? "w-[80px] bg-green-500" : "w-[80px] bg-red-500"}
+        onClick={() => toggleIsSell(name, category, isSell)}>
+        {isSell ? "是" : "否"}
+      </button>
+      {/* </div> */}
       <div>
         <button
           className="w-[80px] text-[red] "
