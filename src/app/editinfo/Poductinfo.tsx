@@ -14,11 +14,10 @@ export default function Poductinfo({
   isSell,
 }: Product): ReactNode {
   const [isDel, setIsDel] = useState<boolean>(false);
-  const [changeSell, setChangeSell] = useState<boolean>(isSell);
   const toggleIsSell = async (
     name: string,
     category: string,
-    isSell: boolean
+    isSell: boolean | null
   ) => {
     await editIsSell(name, category, !isSell);
   };
