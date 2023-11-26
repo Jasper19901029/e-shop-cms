@@ -63,14 +63,14 @@ export default function EditProduct({
     if (name === "price" || name === "quantity") {
       setProductField({ ...productField, [name]: Number(value) });
     }
+    if (name === "isSell" && value === "true") {
+      return setProductField({ ...productField, [name]: true });
+    }
+    if (name === "isSell" && value === "false") {
+      return setProductField({ ...productField, [name]: false });
+    }
     setProductField({ ...productField, [name]: value });
   };
-
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await editProduct(productField);
-  };
-
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setProductField({ ...productField, [name]: value });
@@ -178,6 +178,33 @@ export default function EditProduct({
             )}
           </label>
         </div>
+        <fieldset className="">
+          <legend>
+            開放訂購:
+            <Input
+              label="是"
+              id="是"
+              name="isSell"
+              type="radio"
+              htmlFor="是"
+              value="true"
+              onChange={handlerChange}
+              required
+              checked={productField.isSell === true}
+            />
+            <Input
+              label="否"
+              id="否"
+              name="isSell"
+              type="radio"
+              htmlFor="否"
+              value="false"
+              onChange={handlerChange}
+              required
+              checked={productField.isSell === false}
+            />
+          </legend>
+        </fieldset>
         <button className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px] text-[20px]">
           確定修改
         </button>
