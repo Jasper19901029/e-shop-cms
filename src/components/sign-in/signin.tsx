@@ -34,11 +34,10 @@ export function SignInProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       const user = await signInAuthUserWithEmailAndPassword(email, password);
-      console.log(user);
-      if (user !== null) {
-        setIsSignIn(true);
+      if (user) {
+        return setIsSignIn(true);
       }
-      return;
+      return alert("請輸入帳號密碼");
     } catch (error) {
       return alert("登入失敗");
     }
