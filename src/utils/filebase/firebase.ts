@@ -49,7 +49,7 @@ export type Product = {
   inspectionUrl2?: string;
   category: string;
   introduction: string;
-  isSell: boolean;
+  isSell: boolean | null;
 };
 
 //上傳圖片到storage並回傳url
@@ -64,6 +64,16 @@ export const uploadToStorage = async (file: File): Promise<string> => {
 export const editProduct = async (product: Product): Promise<void> => {
   const collectionRef = collection(db, product.category);
   await updateDoc(doc(collectionRef, product.name), product);
+};
+
+// 更新開放銷售狀態
+export const editIsSell = async (
+  name: string,
+  category: string,
+  isSell: boolean
+): Promise<void> => {
+  const collectionRef = collection(db, category);
+  await updateDoc(doc(collectionRef, name), { isSell: isSell });
 };
 
 //上傳資料到firestore

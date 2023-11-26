@@ -18,7 +18,7 @@ const defaultField: Product = {
   inspectionUrl1: "",
   inspectionUrl2: "",
   introduction: "",
-  isSell: true,
+  isSell: null,
 };
 
 export default function AddProduct(): ReactNode {
@@ -34,7 +34,7 @@ export default function AddProduct(): ReactNode {
   const inspectionImage2Ref = useRef<HTMLInputElement | null>(null);
 
   const [productField, setProductField] = useState<Product>(defaultField);
-  const { name, type, unit, price, quantity, category, introduction } =
+  const { name, type, unit, price, quantity, category, introduction, isSell } =
     productField;
   const handleInputToStorage = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -58,6 +58,12 @@ export default function AddProduct(): ReactNode {
 
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === "isSell" && value === "true") {
+      return setProductField({ ...productField, [name]: true });
+    }
+    if (name === "isSell" && value === "false") {
+      return setProductField({ ...productField, [name]: false });
+    }
     setProductField({ ...productField, [name]: value });
   };
 
@@ -246,6 +252,34 @@ export default function AddProduct(): ReactNode {
             />
           </label>
         </div>
+
+        <fieldset className="">
+          <legend>
+            開放訂購:
+            <Input
+              label="是"
+              id="是"
+              name="isSell"
+              type="radio"
+              htmlFor="是"
+              value="true"
+              onChange={handlerChange}
+              required
+              checked={productField.isSell === true}
+            />
+            <Input
+              label="否"
+              id="否"
+              name="isSell"
+              type="radio"
+              htmlFor="否"
+              value="false"
+              onChange={handlerChange}
+              required
+              checked={productField.isSell === false}
+            />
+          </legend>
+        </fieldset>
 
         <div className="flex flex-row justify-around text-[20px]">
           <button className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px]">

@@ -24,6 +24,7 @@ export default function EditInfo(): ReactNode {
         <span className="w-[80px] before:content-['庫存'] before:lg:content-['現有庫存']"></span>
         <span className="w-[50px] before:content-['單位'] before:lg:content-['單位']"></span>
         <span className="w-[80px] before:content-['編輯'] before:lg:content-['編輯頁面']"></span>
+        <span className="w-[80px] before:content-['銷售'] before:lg:content-['銷售狀態']"></span>
         <span className="w-[80px] before:content-['刪除'] before:lg:content-['刪除']"></span>
       </div>
       {/* {fruitsData &&
