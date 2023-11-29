@@ -7,5 +7,5 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const str = Text("I love you");
-  return NextResponse.json({ abc: "i am post", str: str });
+  return NextResponse.json({ abc: "in data api", str: str });
 }
