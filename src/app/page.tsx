@@ -1,10 +1,12 @@
-import { uploadToStorage } from "../utils/filebase/firebase";
-import Ordercard from "@/components/ordercard/ordercard";
-
-export default function Home() {
+import OrderList from "@/components/orderlist/orderlist";
+export default function Home({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.ReactNode {
   return (
-    <main className="">
-      <Ordercard />
-    </main>
+    <div className="">
+      <OrderList isFinish={false} />
+    </div>
   );
 }

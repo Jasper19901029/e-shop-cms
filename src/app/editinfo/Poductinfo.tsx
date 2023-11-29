@@ -32,13 +32,11 @@ export default function Poductinfo({
       <button className="w-[80px]">
         <Link href={`/editinfo/${category}/${name}`}>編輯</Link>
       </button>
-      {/* <div className=""> */}
       <button
         className={isSell ? "w-[80px] bg-green-500" : "w-[80px] bg-red-500"}
         onClick={() => toggleIsSell(name, category, isSell)}>
         {isSell ? "是" : "否"}
       </button>
-      {/* </div> */}
       <div>
         <button
           className="w-[80px] text-[red] "

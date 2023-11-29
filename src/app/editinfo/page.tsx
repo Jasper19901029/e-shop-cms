@@ -1,17 +1,11 @@
 "use client";
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode } from "react";
 
 import Poductinfo from "./Poductinfo";
 
-import {
-  useGetDriedFruitsData,
-  useGetFruitsData,
-  useGetProduct,
-} from "./getData";
+import { useGetProduct } from "./getData";
 
 export default function EditInfo(): ReactNode {
-  const { driedFruitsData } = useGetDriedFruitsData();
-  const { fruitsData } = useGetFruitsData();
   const fruitProduct = useGetProduct("水果");
   const driedFruitProduct = useGetProduct("果乾");
 
@@ -27,14 +21,6 @@ export default function EditInfo(): ReactNode {
         <span className="w-[80px] before:content-['銷售'] before:lg:content-['銷售狀態']"></span>
         <span className="w-[80px] before:content-['刪除'] before:lg:content-['刪除']"></span>
       </div>
-      {/* {fruitsData &&
-        fruitsData.map((product) => (
-          <Poductinfo key={product.name} {...product} />
-        ))}
-      {driedFruitsData &&
-        driedFruitsData.map((product) => (
-          <Poductinfo key={product.name} {...product} />
-        ))} */}
       {driedFruitProduct.productData &&
         driedFruitProduct.productData.map((product) => (
           <Poductinfo key={product.name} {...product} />
@@ -46,57 +32,3 @@ export default function EditInfo(): ReactNode {
     </>
   );
 }
-
-/*
-  const [products, setProduct] = useState<GetProduct[]>([]);
-  const [category, setCategory] = useState(products);
-  // const [products, setProduct] = useState<GetProduct[]>();
-  useEffect(() => {
-    const getCategory = async () => {
-      setProduct(await getProduct());
-    };
-    getCategory();
-  }, []);
-
-
-      {category &&
-        category.map((product) => (
-          <div key={product.name}>
-            <p>{product.name}</p>
-            <p>{product.price}</p>
-            <p>{product.unit}</p>
-            <p>{product.quantity}</p>
-          </div>
-        ))}
-
-
-*/
-
-/*
-[
-    {
-        種類: "香蕉",
-        品種: [
-            {
-                id: "",
-                品名: "芭蕉",
-                url: "",
-                單位: "斤",
-                價格: 50
-            }
-        ]
-    },
-    {
-        種類: "番茄",
-        品種: [
-            {
-                id: "",
-                品名: "芭蕉",
-                url: "",
-                單位: "斤",
-                價格: 50
-            }
-        ]        
-    }
-]
-*/

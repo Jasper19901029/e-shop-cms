@@ -50,6 +50,29 @@ export type Product = {
   category: string;
   introduction: string;
   isSell: boolean | null;
+  OBTNumber?: string;
+};
+
+export type Order = {
+  DeliveryTime: string;
+  RecipientAddress: string;
+  RecipientMobile: string;
+  RecipientName: string;
+  IsCollection: string;
+  CollectionAmount: number;
+  clientMemo: string;
+  createDate: string;
+  isFinish: boolean;
+  Memo: string;
+  totalPrice: number;
+  cart: Cart[];
+  id: string;
+};
+
+type Cart = {
+  price: number;
+  productName: string;
+  quantity: number;
 };
 
 //上傳圖片到storage並回傳url
@@ -86,13 +109,14 @@ export const addNewProduct = async (product: Product): Promise<void> => {
   }
 };
 
-export const getProducts = async (): Promise<DocumentData[]> => {
-  const querySnapshot = await getDocs(collection(db, "水果"));
-  // console.log("1", querySnapshot);
-  const data = querySnapshot.docs.map((doc) => {
-    return doc.data();
-  });
-  return data;
+export const editOrder = async (
+  id: string,
+  isFinish: boolean,
+  Memo: string,
+  OBTNumber: string
+): Promise<void> => {
+  const collectionRef = collection(db, "訂單");
+  await updateDoc(doc(collectionRef, id), { isFinish, Memo, OBTNumber });
 };
 
 export const delProduct = async (
@@ -101,6 +125,11 @@ export const delProduct = async (
 ): Promise<void> => {
   const collectionRef = collection(db, category);
   deleteDoc(doc(collectionRef, name));
+};
+
+export const delOrder = async (id: string): Promise<void> => {
+  const collectionRef = collection(db, "訂單");
+  deleteDoc(doc(collectionRef, id));
 };
 
 export const signInAuthUserWithEmailAndPassword = async (
