@@ -11,7 +11,8 @@ export const printOrder = async (
   isFinish: boolean
 ) => {
   try {
-    const res = await fetch("https://e-shop-cms.vercel.app/api/print", {
+    const res = await fetch("http://localhost:3000/api/print", {
+      // const res = await fetch("https://e-shop-cms.vercel.app/api/print", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,13 +41,14 @@ export const printOrder = async (
           FileNo: FileNo,
           Orders: [{ OBTNumber: OBTNumber }],
         }),
+        cache: "no-cache",
       }
     );
     const res1 = await downloadData.blob();
     const url = URL.createObjectURL(res1);
     window.open(url, "_blank");
     alert("列印成功");
-    editOrder(id, (isFinish = !isFinish), OBTNumber, Memo);
+    editOrder(id, (isFinish = !isFinish), Memo, OBTNumber);
   } catch (error) {
     alert("列印失敗");
   }
