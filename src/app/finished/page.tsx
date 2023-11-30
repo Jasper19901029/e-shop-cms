@@ -1,4 +1,9 @@
+import OrderList from "@/components/orderlist/orderlist";
 export default function Finished(): React.ReactNode {
   console.log("still in sever componet");
-  return <div>finished</div>;
+  return (
+    <>
+      <OrderList isFinish={true} />
+    </>
+  );
 }

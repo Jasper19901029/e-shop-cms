@@ -47,8 +47,12 @@ export const printOrder = async (
     const res1 = await downloadData.blob();
     const url = URL.createObjectURL(res1);
     window.open(url, "_blank");
+    if (isFinish) {
+      await editOrder(id, (isFinish = isFinish), Memo, OBTNumber);
+      return alert("列印成功");
+    }
+    await editOrder(id, (isFinish = !isFinish), Memo, OBTNumber);
     alert("列印成功");
-    editOrder(id, (isFinish = !isFinish), Memo, OBTNumber);
   } catch (error) {
     alert("列印失敗");
   }
