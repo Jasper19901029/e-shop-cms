@@ -80,7 +80,7 @@ export default function Ordercard({
               isFinish
             )
           }>
-          {isFinish ? "已完成" : "列印貨運單"}
+          {isFinish ? "重新列印" : "列印貨運單"}
         </button>
         <button
           className="border-2 border-gray-300 rounded-md mt-2"
