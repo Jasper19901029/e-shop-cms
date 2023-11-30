@@ -11,8 +11,8 @@ export const printOrder = async (
   isFinish: boolean
 ) => {
   try {
-    const res = await fetch("http://localhost:3000/api/print", {
-      // const res = await fetch("https://e-shop-cms.vercel.app/api/print", {
+    // const res = await fetch("http://localhost:3000/api/print", {
+    const res = await fetch("https://e-shop-cms.vercel.app/api/print", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
