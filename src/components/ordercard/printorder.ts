@@ -1,4 +1,4 @@
-import { editOrder } from "@/utils/filebase/firebase";
+import { editOrder } from "@/utils/firebase/firebase";
 export const printOrder = async (
   RecipientName: string,
   RecipientMobile: string,
