@@ -7,7 +7,9 @@ import React, {
   MouseEventHandler,
 } from "react";
 import Input from "../input/input";
-import { signInAuthUserWithEmailAndPassword } from "../../utils/filebase/firebase";
+import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase";
+import { create } from "zustand";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 type SignInContext = {
   isSignIn: boolean;
@@ -52,14 +54,17 @@ export function SignInProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function SignIn({ children }: { children: React.ReactNode }) {
-  const { isSignIn, signIn, email, password } = useContext(SignInContext);
-
+  // const { isSignIn, signIn, email, password } = useContext(SignInContext);
+  const { isSignIn, signIn, email, password } = useSignInStore();
+  console.log("isSignIn", isSignIn);
   return <>{isSignIn ? children : <LoggIn />}</>;
 }
 
 export function LoggIn() {
-  const { signIn, setEmail, setPassword, email, password } =
-    useContext(SignInContext);
+  // const { signIn, setEmail, setPassword, email, password } =
+  //   useContext(SignInContext);
+  const { isSignIn, signIn, email, password, setEmail, setPassword } =
+    useSignInStore();
   return (
     <div className="flex flex-col w-screen h-screen justify-center items-center space-y-4">
       <Input
@@ -86,3 +91,43 @@ export function LoggIn() {
     </div>
   );
 }
+
+type SignInStore = {
+  isSignIn: boolean;
+  signIn: (email: string, password: string) => void;
+  email: string;
+  setEmail: (email: string) => void;
+  password: string;
+  setPassword: (password: string) => void;
+};
+
+const signIn = async (email: string, password: string) => {
+  const user = await signInAuthUserWithEmailAndPassword(email, password);
+  if (user) {
+    return true;
+  }
+};
+
+export const useSignInStore = create<SignInStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        isSignIn: false,
+        signIn: async (email: string, password: string) => {
+          const user = await signIn(email, password);
+          if (user) {
+            set({ isSignIn: true });
+          }
+        },
+        email: "",
+        setEmail: (email) => set({ email }),
+        password: "",
+        setPassword: (password) => set({ password }),
+      }),
+      {
+        name: "signIn-storage",
+        storage: createJSONStorage(() => sessionStorage),
+      }
+    )
+  )
+);

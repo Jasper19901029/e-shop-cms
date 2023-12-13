@@ -5,7 +5,7 @@ import {
   Product,
   editProduct,
   uploadToStorage,
-} from "@/utils/filebase/firebase";
+} from "@/utils/firebase/firebase";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 

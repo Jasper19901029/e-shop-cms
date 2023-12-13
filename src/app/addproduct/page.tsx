@@ -4,7 +4,7 @@ import {
   uploadToStorage,
   Product,
   addNewProduct,
-} from "@/utils/filebase/firebase";
+} from "@/utils/firebase/firebase";
 import Input from "@/components/input/input";
 
 const defaultField: Product = {

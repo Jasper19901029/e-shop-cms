@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { printOrder } from "./printorder";
-import { Order, delOrder } from "@/utils/filebase/firebase";
+import { Order, delOrder } from "@/utils/firebase/firebase";
 import Input from "@/components/input/input";
 // DeliveryTime: string;
 // RecipientAddress: string;

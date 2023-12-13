@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Product, delProduct, editIsSell } from "@/utils/filebase/firebase";
+import { Product, delProduct, editIsSell } from "@/utils/firebase/firebase";
 import { ReactNode, useState } from "react";
 
 export default function Poductinfo({

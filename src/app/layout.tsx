@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navigation from "@/components/navigation/navigation";
 
-import { SignInProvider } from "@/components/sign-in/signin";
+import { SignInProvider, SignIn } from "@/components/sign-in/signin";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col lg:flex-row">
-        <SignInProvider>
+        {/* <SignInProvider> */}
+        <SignIn>
           <Navigation />
           <div className="h-full w-full lg:basis-[calc(100%-200px)]">
             {children}
           </div>
-        </SignInProvider>
+        </SignIn>
+        {/* </SignInProvider> */}
       </body>
     </html>
   );
