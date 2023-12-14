@@ -18,6 +18,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   User,
+  NextOrObserver,
 } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -141,6 +142,21 @@ export const signInAuthUserWithEmailAndPassword = async (
   return await signInWithEmailAndPassword(auth, email, password);
 };
 
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
+  onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = (): Promise<User | null> => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
 // signInAuthUserWithEmailAndPassword("test@gmail.com", "123412345").then((data) =>
 //   console.log(data)
 // );
