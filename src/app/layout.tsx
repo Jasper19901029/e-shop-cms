@@ -23,9 +23,7 @@ export default function RootLayout({
         {/* <SignInProvider> */}
         <SignIn>
           <Navigation />
-          <div className="h-full w-full lg:basis-[calc(100%-200px)]">
-            {children}
-          </div>
+          {children}
         </SignIn>
         {/* </SignInProvider> */}
       </body>

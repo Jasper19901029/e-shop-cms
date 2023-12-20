@@ -8,7 +8,7 @@ import {
 import Input from "@/components/input/input";
 
 const defaultField: Product = {
-  name: "",
+  productName: "",
   type: "",
   productUrl: "",
   unit: "",
@@ -34,8 +34,16 @@ export default function AddProduct(): ReactNode {
   const inspectionImage2Ref = useRef<HTMLInputElement | null>(null);
 
   const [productField, setProductField] = useState<Product>(defaultField);
-  const { name, type, unit, price, quantity, category, introduction, isSell } =
-    productField;
+  const {
+    productName,
+    type,
+    unit,
+    price,
+    quantity,
+    category,
+    introduction,
+    isSell,
+  } = productField;
   const handleInputToStorage = async (
     e: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
@@ -117,7 +125,7 @@ export default function AddProduct(): ReactNode {
           type="text"
           htmlFor="name"
           placeholder="請輸入產品名字"
-          value={name}
+          value={productName}
           onChange={handlerChange}
           required
         />

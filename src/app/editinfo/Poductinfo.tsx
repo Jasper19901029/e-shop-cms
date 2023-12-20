@@ -3,7 +3,7 @@ import { Product, delProduct, editIsSell } from "@/utils/firebase/firebase";
 import { ReactNode, useState } from "react";
 
 export default function Poductinfo({
-  name,
+  productName,
   price,
   quantity,
   productUrl,
@@ -15,16 +15,16 @@ export default function Poductinfo({
 }: Product): ReactNode {
   const [isDel, setIsDel] = useState<boolean>(false);
   const toggleIsSell = async (
-    name: string,
+    productName: string,
     category: string,
     isSell: boolean | null
   ) => {
-    await editIsSell(name, category, !isSell);
+    await editIsSell(productName, category, !isSell);
   };
 
   return (
     <div className="flex justify-around text-center odd:bg-gray-200 even:my-2 static">
-      <p className="w-[100px]">{name}</p>
+      <p className="w-[100px]">{productName}</p>
       <p className="w-[80px] ">{price}</p>
       <p className="w-[80px]">{quantity}</p>
       <p className="w-[50px]">{unit}</p>
@@ -34,7 +34,7 @@ export default function Poductinfo({
       </button>
       <button
         className={isSell ? "w-[80px] bg-green-500" : "w-[80px] bg-red-500"}
-        onClick={() => toggleIsSell(name, category, isSell)}>
+        onClick={() => toggleIsSell(productName, category, isSell)}>
         {isSell ? "是" : "否"}
       </button>
       <div>
@@ -45,7 +45,7 @@ export default function Poductinfo({
         </button>
         {isDel && (
           <ConfirmDelete
-            name={name}
+            productName={productName}
             category={category}
             isDel={isDel}
             setIsDel={setIsDel}
@@ -57,26 +57,29 @@ export default function Poductinfo({
 }
 
 export function ConfirmDelete({
-  name,
+  productName,
   category,
   isDel,
   setIsDel,
 }: {
-  name: string;
+  productName: string;
   category: string;
   isDel: boolean;
   setIsDel: React.Dispatch<React.SetStateAction<boolean>>;
 }): ReactNode {
-  const checkDelete = async (category: string, name: string): Promise<void> => {
-    await delProduct(category, name);
+  const checkDelete = async (
+    category: string,
+    productName: string
+  ): Promise<void> => {
+    await delProduct(category, productName);
   };
   return (
     <div className="absolute bg-[gray] w-[200px] h-[100px] top-100 right-20 flex flex-col justify-around">
       <h2>
-        確認刪除<span className="text-[red]"> {name}</span>?
+        確認刪除<span className="text-[red]"> {productName}</span>?
       </h2>
       <div className="flex flex-row justify-around ">
-        <button onClick={() => checkDelete(name, category)}>確認</button>
+        <button onClick={() => checkDelete(productName, category)}>確認</button>
         <button onClick={() => setIsDel(!isDel)}>取消</button>
       </div>
     </div>
