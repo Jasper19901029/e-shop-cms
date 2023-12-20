@@ -40,7 +40,7 @@ export const db = getFirestore();
 export const auth = getAuth();
 
 export type Product = {
-  name: string;
+  productName: string;
   type: string;
   productUrl: string;
   unit: string;
@@ -87,7 +87,7 @@ export const uploadToStorage = async (file: File): Promise<string> => {
 //更新doc資料(每一筆doc都是一個product)
 export const editProduct = async (product: Product): Promise<void> => {
   const collectionRef = collection(db, product.category);
-  await updateDoc(doc(collectionRef, product.name), product);
+  await updateDoc(doc(collectionRef, product.productName), product);
 };
 
 // 更新開放銷售狀態
@@ -104,7 +104,7 @@ export const editIsSell = async (
 export const addNewProduct = async (product: Product): Promise<void> => {
   try {
     const collectionRef = collection(db, product.category);
-    await setDoc(doc(collectionRef, product.name), product);
+    await setDoc(doc(collectionRef, product.productName), product);
   } catch (error) {
     console.log(error);
   }

@@ -7,12 +7,12 @@ import React from "react";
 export default function Page({
   params,
 }: {
-  params: { category: string; name: string };
+  params: { category: string; productName: string };
 }): React.ReactNode {
-  const { category, name } = params;
+  const { category, productName } = params;
   const productData = useGetProduct(decodeURI(category));
   const filterData = productData.productData?.filter(
-    (product) => product.name === decodeURI(name)
+    (product) => product.productName === decodeURI(productName)
   );
   console.log(filterData);
 

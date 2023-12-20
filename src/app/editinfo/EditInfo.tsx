@@ -11,11 +11,11 @@ export default function EditInfo(): ReactNode {
     <div className="w-[1000px] h-[600px] bg-[white]">
       {driedFruitProduct.productData &&
         driedFruitProduct.productData.map((product) => (
-          <Poductinfo key={product.name} {...product} />
+          <Poductinfo key={product.productName} {...product} />
         ))}
       {fruitProduct.productData &&
         fruitProduct.productData.map((product) => (
-          <Poductinfo key={product.name} {...product} />
+          <Poductinfo key={product.productName} {...product} />
         ))}
     </div>
   );

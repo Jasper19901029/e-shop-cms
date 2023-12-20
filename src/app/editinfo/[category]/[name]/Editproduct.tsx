@@ -10,7 +10,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 export default function EditProduct({
-  name,
+  productName,
   price,
   quantity,
   productUrl,
@@ -23,7 +23,7 @@ export default function EditProduct({
   inspectionUrl2,
 }: Product): React.ReactNode {
   const [productField, setProductField] = useState<Product>({
-    name: name,
+    productName: productName,
     type: type,
     productUrl: productUrl,
     unit: unit,
@@ -100,7 +100,7 @@ export default function EditProduct({
         className="flex flex-col space-y-6 lg:space-y-10 items-center">
         <div className="flex flex-col space-y-6 lg:space-y-10">
           <p>
-            產品名稱: <span className="ml-4">{name}</span>
+            產品名稱: <span className="ml-4">{productName}</span>
           </p>
           <Input
             label="產品價格"

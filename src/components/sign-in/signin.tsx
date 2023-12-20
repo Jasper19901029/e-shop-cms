@@ -58,7 +58,7 @@ export function SignIn({ children }: { children: React.ReactNode }) {
   // const { isSignIn, signIn, email, password } = useContext(SignInContext);
   // const { isSignIn } = useSignInStore();
   const store = useStore(useSignInStore, (state) => state);
-  return <div>{store?.isSignIn ? children : <LoggIn />}</div>;
+  return <>{store?.isSignIn ? children : <LoggIn />}</>;
 }
 
 export function LoggIn() {
