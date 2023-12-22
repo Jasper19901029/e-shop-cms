@@ -35,7 +35,7 @@ export default function Ordercard({
     setMemo(e.target.value);
   };
   return (
-    <div className="grid place-content-around border-2 border-gray-400 m-2 p-2 pt-auto tracking-wider relative">
+    <div className="flex flex-col place-content-around border-2 border-gray-400 m-2 p-2 tracking-wider relative">
       <p>訂單日期:{createDate}</p>
       <p>訂購人:{RecipientName}</p>
       <p>訂購人電話:{RecipientMobile}</p>

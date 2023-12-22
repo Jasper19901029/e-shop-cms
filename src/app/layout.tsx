@@ -23,6 +23,7 @@ export default function RootLayout({
         {/* <SignInProvider> */}
         <SignIn>
           <Navigation />
+
           {children}
         </SignIn>
         {/* </SignInProvider> */}
