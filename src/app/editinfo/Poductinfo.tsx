@@ -30,7 +30,7 @@ export default function Poductinfo({
       <p className="w-[50px]">{unit}</p>
 
       <button className="w-[80px]">
-        <Link href={`/editinfo/${category}/${name}`}>編輯</Link>
+        <Link href={`/editinfo/${category}/${productName}`}>編輯</Link>
       </button>
       <button
         className={isSell ? "w-[80px] bg-green-500" : "w-[80px] bg-red-500"}
