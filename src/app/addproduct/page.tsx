@@ -120,10 +120,10 @@ export default function AddProduct(): ReactNode {
         className="flex flex-col space-y-6 lg:space-y-10">
         <Input
           label="產品名字"
-          id="name"
-          name="name"
+          id="productName"
+          name="productName"
           type="text"
-          htmlFor="name"
+          htmlFor="productName"
           placeholder="請輸入產品名字"
           value={productName}
           onChange={handlerChange}
