@@ -25,6 +25,7 @@ import {
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASEURL,
   // 要在非server端執行process.env要在.env內加上NEXT_PUBLIC_的前墜(例如NEXT_PUBLIC_FIREBASE_PROJECTID)，打包時還是會顯示在客戶端，所以secret不要加前墜這樣執行。
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
