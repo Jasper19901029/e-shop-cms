@@ -20,13 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col lg:flex-row">
-        {/* <SignInProvider> */}
         <SignIn>
           <Navigation />
-
           {children}
         </SignIn>
-        {/* </SignInProvider> */}
       </body>
     </html>
   );

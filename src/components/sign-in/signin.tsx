@@ -12,60 +12,12 @@ import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebas
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-// type SignInContext = {
-//   isSignIn: boolean;
-//   signIn: (email: string, password: string) => void;
-//   email: string;
-//   setEmail: (email: string) => void;
-//   password: string;
-//   setPassword: (password: string) => void;
-// };
-
-// const SignInContext = createContext<SignInContext>({
-//   isSignIn: false,
-//   signIn: async (email: string, password: string) => {},
-//   email: "",
-//   setEmail: () => {},
-//   password: "",
-//   setPassword: () => {},
-// });
-
-// export function SignInProvider({ children }: { children: React.ReactNode }) {
-//   const [isSignIn, setIsSignIn] = useState(false);
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const signIn = async (email: string, password: string) => {
-//     try {
-//       const user = await signInAuthUserWithEmailAndPassword(email, password);
-//       if (user) {
-//         return setIsSignIn(true);
-//       }
-//       return alert("請輸入帳號密碼");
-//     } catch (error) {
-//       return alert("登入失敗");
-//     }
-//   };
-
-//   const value = { isSignIn, signIn, email, password, setEmail, setPassword };
-//   return (
-//     <SignInContext.Provider value={value}>
-//       <SignIn>{children}</SignIn>
-//     </SignInContext.Provider>
-//   );
-// }
-
 export function SignIn({ children }: { children: React.ReactNode }) {
-  // const { isSignIn, signIn, email, password } = useContext(SignInContext);
-  // const { isSignIn } = useSignInStore();
   const store = useStore(useSignInStore, (state) => state);
   return <>{store?.isSignIn ? children : <LoggIn />}</>;
 }
 
 export function LoggIn() {
-  // const { signIn, setEmail, setPassword, email, password } =
-  //   useContext(SignInContext);
-  // const { isSignIn, signIn, email, password, setEmail, setPassword } =
-  //   useSignInStore();
   const store = useStore(useSignInStore, (state) => state);
   if (store === undefined) return null;
   const { signIn, email, password, setEmail, setPassword } = store;
