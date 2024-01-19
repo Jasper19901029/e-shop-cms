@@ -23,14 +23,13 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASEURL,
+  apiKey: "test-back-b4f7e",
+  authDomain: "test-back-b4f7e.firebaseapp.com",
   // 要在非server端執行process.env要在.env內加上NEXT_PUBLIC_的前墜(例如NEXT_PUBLIC_FIREBASE_PROJECTID)，打包時還是會顯示在客戶端，所以secret不要加前墜這樣執行。
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGINGSENDERID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
+  storageBucket: "test-back-b4f7e.appspot.com",
+  messagingSenderId: "990935080387",
+  appId: "1:990935080387:web:5ea46aa8c026c256e27176",
 };
 
 // Initialize Firebase
