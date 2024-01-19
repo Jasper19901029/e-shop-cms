@@ -8,7 +8,7 @@ import React, {
   MouseEventHandler,
 } from "react";
 import Input from "../input/input";
-import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase";
+import { signInAuthUserWithEmailAndPassword } from "@/utils/firebase/firebase";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 

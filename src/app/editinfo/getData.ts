@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { db, Product } from "../../utils/firebase/firebase";
+import { db, Product } from "@/utils/firebase/firebase";
 import { query, onSnapshot, collection } from "firebase/firestore";
 
 export const useGetProduct = (category: string) => {
