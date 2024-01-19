@@ -3,17 +3,7 @@ import { useState } from "react";
 import { printOrder } from "./printorder";
 import { Order, delOrder } from "@/utils/firebase/firebase";
 import Input from "@/components/input/input";
-// DeliveryTime: string;
-// RecipientAddress: string;
-// RecipientMobile: string;
-// RecipientName: string;
-// cashOnDelivery: boolean;
-// clientMemo: string;
-// isFinish: boolean;
-// memo: string;
-// ownerMemo: string;
-// totalPrice: number;
-// cart: Cart[];
+
 export default function Ordercard({
   DeliveryTime,
   RecipientAddress,
@@ -117,13 +107,3 @@ export function ConfirmDelete({
     </div>
   );
 }
-
-/**
-      RecipientName
-      RecipientMobile
-      RecipientAddress
-      IsCollection
-      CollectionAmount
-      Memo
-      DeliveryTime
- */
