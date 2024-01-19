@@ -23,7 +23,7 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "test-back-b4f7e",
+  apiKey: "AIzaSyAizYFDSeXWhvd2m8qSXNDV9oC7T2RAhH0",
   authDomain: "test-back-b4f7e.firebaseapp.com",
   // 要在非server端執行process.env要在.env內加上NEXT_PUBLIC_的前墜(例如NEXT_PUBLIC_FIREBASE_PROJECTID)，打包時還是會顯示在客戶端，所以secret不要加前墜這樣執行。
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
