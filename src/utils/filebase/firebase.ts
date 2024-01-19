@@ -157,6 +157,3 @@ export const getCurrentUser = (): Promise<User | null> => {
     );
   });
 };
-// signInAuthUserWithEmailAndPassword("test@gmail.com", "123412345").then((data) =>
-//   console.log(data)
-// );
