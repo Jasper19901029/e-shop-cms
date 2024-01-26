@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Product, delProduct, editIsSell } from "@/utils/firebase/firebase";
 import { ReactNode, useState } from "react";
+import { Switch } from "@mui/material";
 
 export default function Poductinfo({
   productName,
@@ -23,7 +24,7 @@ export default function Poductinfo({
   };
 
   return (
-    <div className="flex justify-around text-center odd:bg-gray-200 even:my-2 static">
+    <div className="flex justify-around items-center text-center odd:bg-gray-200 even:my-2 static">
       <p className="w-[100px]">{productName}</p>
       <p className="w-[80px] ">{price}</p>
       <p className="w-[80px]">{quantity}</p>
@@ -33,9 +34,10 @@ export default function Poductinfo({
         <Link href={`/editinfo/${category}/${productName}`}>編輯</Link>
       </button>
       <button
-        className={isSell ? "w-[80px] bg-green-500" : "w-[80px] bg-red-500"}
+        className={isSell ? "w-[100px] bg-green-500" : "w-[100px] bg-red-500"}
         onClick={() => toggleIsSell(productName, category, isSell)}>
-        {isSell ? "是" : "否"}
+        {/* {isSell ? "是" : "否"} */}關
+        <Switch checked={isSell ? true : false} />開
       </button>
       <div>
         <button
