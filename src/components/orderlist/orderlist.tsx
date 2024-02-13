@@ -11,7 +11,7 @@ export default function OrderList({
   const { orderList } = useGetOrderLists();
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2  min-[900px]:grid-cols-3 min-[1150px]:grid-cols-4 min-[1400px]:grid-cols-5">
+    <div className="flex flex-row flex-wrap ml-8">
       {orderList &&
         orderList
           .filter((order) => order.isFinish === isFinish)

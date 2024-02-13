@@ -25,21 +25,21 @@ export default function Ordercard({
     setMemo(e.target.value);
   };
   return (
-    <div className="flex flex-col place-content-around border-2 border-gray-400 m-2 p-2 tracking-wider relative">
+    <div className="flex flex-col place-content-around border-2 border-gray-400 mx-8 my-8 p-4 tracking-wider relative">
       <p>訂單日期:{createDate}</p>
       <p>訂購人:{RecipientName}</p>
       <p>訂購人電話:{RecipientMobile}</p>
       <p>訂購人地址:{RecipientAddress}</p>
       <p>付款方式:{IsCollection === "N" ? "匯款" : "貨到付款"}</p>
       <p>客戶備註:{clientMemo}</p>
-      <div className="">
+      <div className="space-y-4">
         <p className="">購買商品:</p>
         {cart.map(({ productName, price, quantity }) => (
           <div
             key={`${id}${productName}`}
-            className="flex flex-col items-center ">
-            <p className="text-right">{productName}</p>
-            <p className="ml-2 text-right">
+            className="flex flex-row justify-between">
+            <p className="ml-4">{productName}</p>
+            <p className="mr-4">
               單價:${price} * {quantity}
             </p>
           </div>
