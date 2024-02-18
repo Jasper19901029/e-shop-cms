@@ -47,10 +47,16 @@ export default function AddProduct(): ReactNode {
   const handleInputToStorage = async (
     e: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
-    const { name } = e.target;
+    console.log(e);
     if (!e.target.files) {
       return;
     }
+    const checkFile = /(\.jpg|\.jpeg|\.png|\.webp)$/i;
+    if (!checkFile.test(e.target.files[0].name)) {
+      e.target.value = "";
+      return alert("只可以是圖片檔喔");
+    }
+    const { name } = e.target;
     switch (name) {
       case "productUrl":
         setProductImage(e.target.files[0]);
@@ -229,6 +235,7 @@ export default function AddProduct(): ReactNode {
               ref={productImageRef}
               onChange={handleInputToStorage}
               required
+              accept=".jpg, .jpeg, .png, .webp"
             />
           </label>
 
@@ -243,6 +250,7 @@ export default function AddProduct(): ReactNode {
               ref={inspectionImage1Ref}
               onChange={handleInputToStorage}
               required
+              accept=".jpg, .jpeg, .png, .webp"
             />
           </label>
 
@@ -257,6 +265,7 @@ export default function AddProduct(): ReactNode {
               ref={inspectionImage2Ref}
               onChange={handleInputToStorage}
               required
+              accept=".jpg, .jpeg, .png, .webp"
             />
           </label>
         </div>
