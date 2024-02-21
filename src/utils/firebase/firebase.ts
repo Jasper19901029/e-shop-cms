@@ -11,6 +11,7 @@ import {
   deleteDoc,
   onSnapshot,
   query,
+  addDoc,
 } from "firebase/firestore";
 
 import {
@@ -20,6 +21,7 @@ import {
   User,
   NextOrObserver,
 } from "firebase/auth";
+import dayjs from "dayjs";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -73,6 +75,21 @@ type Cart = {
   price: number;
   productName: string;
   quantity: number;
+};
+
+export type GroupBuyOrder = {
+  id?: string;
+  groupBuyName: string;
+  groupBuyOwner: string;
+  groupBuyProduct: string;
+  endAt: string;
+};
+
+export type Question = {
+  type: "radio" | "text";
+  title: string;
+  required: boolean;
+  questions: string | string[];
 };
 
 //上傳圖片到storage並回傳url
@@ -155,4 +172,35 @@ export const getCurrentUser = (): Promise<User | null> => {
       reject
     );
   });
+};
+
+export const addNewGroupBuy = async (
+  groupOrderDefault: GroupBuyOrder,
+  questions: Question[]
+): Promise<void> => {
+  try {
+    const collectionRef = collection(db, "團購");
+    const newOrderToDoc = await addDoc(collectionRef, groupOrderDefault).then(
+      (doc) => {
+        return doc.id;
+      }
+    );
+
+    // await setDoc(doc(collectionRef, newOrderToDoc), { id: newOrderToDoc });
+    await updateDoc(doc(collectionRef, newOrderToDoc), {
+      id: newOrderToDoc,
+      questions,
+      createAt: dayjs().format("YYYY/MM/DD"),
+      test: 1,
+    });
+    setTimeout(
+      async () =>
+        await updateDoc(doc(collectionRef, newOrderToDoc), {
+          test: 2,
+        }),
+      3000
+    );
+  } catch (error) {
+    console.log(error);
+  }
 };

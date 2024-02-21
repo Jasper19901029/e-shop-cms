@@ -47,7 +47,6 @@ export default function AddProduct(): ReactNode {
   const handleInputToStorage = async (
     e: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
-    console.log(e);
     if (!e.target.files) {
       return;
     }

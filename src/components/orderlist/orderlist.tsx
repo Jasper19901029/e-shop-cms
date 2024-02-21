@@ -9,11 +9,14 @@ export default function OrderList({
   isFinish: boolean;
 }): React.ReactNode {
   const { orderList } = useGetOrderLists();
+  const sortOrder = orderList
+    ?.map((order) => order)
+    .sort((a, b) => Number(b.createDate) - Number(a.createDate));
 
   return (
     <div className="flex flex-row flex-wrap ml-8">
-      {orderList &&
-        orderList
+      {sortOrder &&
+        sortOrder
           .filter((order) => order.isFinish === isFinish)
           .map((order) => <Ordercard key={order.id} {...order} />)}
     </div>
