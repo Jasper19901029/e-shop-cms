@@ -82,7 +82,6 @@ export type GroupBuyOrder = {
   groupBuyName: string;
   groupBuyOwner: string;
   groupBuyProduct: string;
-  endAt: string;
 };
 
 export type Question = {
@@ -191,15 +190,7 @@ export const addNewGroupBuy = async (
       id: newOrderToDoc,
       questions,
       createAt: dayjs().format("YYYY/MM/DD"),
-      test: 1,
     });
-    setTimeout(
-      async () =>
-        await updateDoc(doc(collectionRef, newOrderToDoc), {
-          test: 2,
-        }),
-      3000
-    );
   } catch (error) {
     console.log(error);
   }

@@ -20,7 +20,10 @@ export async function handleSubmit(
     };
   });
 
-  await addNewGroupBuy(groupDefault, groupOrderQuestions);
+  console.log("groupDefault", groupDefault);
+  console.log("groupOrderQuestions", groupOrderQuestions);
+
+  // await addNewGroupBuy(groupDefault, groupOrderQuestions);
 }
 
 //   groupBuyName: string;

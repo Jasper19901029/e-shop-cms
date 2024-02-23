@@ -15,6 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { handleSubmit } from "./formaction";
 import { GroupBuyOrder } from "@/utils/firebase/firebase";
 import dayjs from "dayjs";
+import { Button } from "@/components/ui/button";
 
 export type Components = {
   key: string;
@@ -32,16 +33,13 @@ const groupDefaultField: GroupBuyOrder = {
   groupBuyName: "",
   groupBuyOwner: "",
   groupBuyProduct: "",
-  endAt: "",
 };
 
 export default function AddNewGroupBuyPage() {
   const [components, setComponents] = useState<Components[]>([]);
   const [groupDefault, setGroupDefault] =
     useState<GroupBuyOrder>(groupDefaultField);
-  const day = dayjs().format("YYYY/MM/DD");
-  const day1 = dayjs().format("2024/02/22");
-  console.log(dayjs(day1).diff(day, "millisecond"), "??");
+
   const handleGroupDefault = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setGroupDefault({ ...groupDefault, [name]: value });
@@ -67,12 +65,23 @@ export default function AddNewGroupBuyPage() {
     setComponents(filterComponents);
   };
 
-  const handleQuestionTitle = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleQuestionTitle = (
+    e: ChangeEvent<HTMLInputElement>,
+    questionType: string,
+    questionKey: string
+  ) => {
     const { value } = e.target;
     const dataKey = e.target.getAttribute("data-key");
+
     const changeValue = components.map((component) => {
       if (component.key === dataKey) {
         component.title = value;
+        if (
+          questionType === "text" &&
+          component.questions[0].key === questionKey
+        ) {
+          component.questions[0].question = value;
+        }
         return component;
       }
       return component;
@@ -84,9 +93,13 @@ export default function AddNewGroupBuyPage() {
     const changeValue = components.map((component) => {
       if (component.key === key) {
         component.type = value;
-        component.questions = component.questions.filter(
-          (item, idx) => idx === 0
-        );
+        component.questions = component.questions.filter((item, idx) => {
+          if (value === "text") {
+            item.question = "";
+            return idx === 0;
+          }
+          return idx === 0;
+        });
         return component;
       }
 
@@ -151,114 +164,170 @@ export default function AddNewGroupBuyPage() {
   };
 
   return (
-    <div>
-      <h2>AddNewGroupBuy</h2>
+    <div className="w-full flex flex-col mt-8">
+      <h2 className="mb-8 text-2xl ml-8">新增團購表單</h2>
       <form
+        className="flex flex-col w-4/5 mx-auto sm:w-3/5 sm:mx-auto border-2 rounded-lg p-8 space-y-4 mb-8"
         onSubmit={(event: ChangeEvent<HTMLFormElement>) => {
           handleSubmit(event, groupDefault, components);
         }}>
         <div className="flex items-center">
-          <Label htmlFor="groupBuyName">團購名稱</Label>
+          <Label className="w-[120px] mr-2" htmlFor="groupBuyName">
+            團購名稱
+          </Label>
           <Input
+            className=""
+            required
             id="groupBuyName"
             name="groupBuyName"
             onChange={handleGroupDefault}
           />
         </div>
         <div className="flex items-center">
-          <Label htmlFor="groupBuyOwner">團購主姓名</Label>
+          <Label className="w-[120px] mr-2" htmlFor="groupBuyOwner">
+            團購主姓名
+          </Label>
           <Input
+            className=""
+            required
             id="groupBuyOwner"
             name="groupBuyOwner"
             onChange={handleGroupDefault}
           />
         </div>
         <div className="flex items-center">
-          <Label htmlFor="groupBuyProduct">團購商品</Label>
+          <Label className="w-[120px] mr-2" htmlFor="groupBuyProduct">
+            團購商品
+          </Label>
           <Input
+            className=""
+            required
             id="groupBuyProduct"
             name="groupBuyProduct"
             onChange={handleGroupDefault}
           />
         </div>
-        <div className="flex items-center">
-          <Label htmlFor="endAt">表單失效日</Label>
-          <Input id="endAt" name="endAt" onChange={handleGroupDefault} />
+        <div className="flex justify-end">
+          <Button
+            type="button"
+            variant="ghost"
+            className="w-fit"
+            onClick={addNewQuestion}>
+            新增問題
+          </Button>
         </div>
-
         {components.map((component, index) => (
-          <div key={component.key} className="border-2 m-4 flex flex-col">
-            <div className="flex">
-              <Label htmlFor={`question${index + 1}title`}>
+          <div
+            key={component.key}
+            className="flex flex-col p-6 border-2 rounded-lg space-y-4">
+            <div className="flex items-center">
+              <Label
+                htmlFor={`question${index + 1}title`}
+                className="w-[130px]">
                 {component.type === "text"
                   ? `簡答題 ${index + 1}`
-                  : `多選題 ${index + 1}`}
+                  : `選選題 ${index + 1}`}
               </Label>
               <Input
+                required
                 id={`question${index + 1}title`}
-                onChange={handleQuestionTitle}
+                onChange={(e) =>
+                  handleQuestionTitle(
+                    e,
+                    component.type,
+                    component.questions[0].key
+                  )
+                }
                 data-key={component.key}
               />
             </div>
 
             {component.questions.map((item, idx) => (
               <div key={item.key}>
-                <Label htmlFor={`question${index + 1}-${idx + 1}`}>{`question${
-                  index + 1
-                }-${idx + 1}`}</Label>
-                <Input
-                  id={`question${index + 1}-${idx + 1}`}
-                  onChange={handleQuestions}
-                  data-component-key={component.key}
-                  data-self-key={item.key}
-                  name={`question`}
-                />
-                {component.type === "radio" &&
-                  component.questions.length > 1 && (
-                    <div
-                      onClick={() => deleteQuestions(component.key, item.key)}>
-                      del
+                {component.type === "radio" && (
+                  <div className="flex flex-col">
+                    <div className="flex justify-between mb-2 items-center">
+                      <Label
+                        htmlFor={`question${index + 1}-${idx + 1}`}>{`選項${
+                        idx + 1
+                      }`}</Label>
+                      {component.type === "radio" &&
+                        component.questions.length > 1 && (
+                          <Button
+                            type="button"
+                            className="w-fit bg-white border-0"
+                            variant="ghost"
+                            onClick={() =>
+                              deleteQuestions(component.key, item.key)
+                            }>
+                            <FaRegTrashCan />
+                          </Button>
+                        )}
                     </div>
-                  )}
+
+                    <Input
+                      required
+                      id={`question${index + 1}-${idx + 1}`}
+                      onChange={handleQuestions}
+                      data-component-key={component.key}
+                      data-self-key={item.key}
+                      name={`question`}
+                    />
+                  </div>
+                )}
               </div>
             ))}
 
             {component.type === "radio" && (
-              <div onClick={() => addNewQuestions(component.key)}>add</div>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => addNewQuestions(component.key)}>
+                新增選項
+              </Button>
             )}
-            <Select
-              onValueChange={(e: "text" | "radio") =>
-                handleQuestionType(e, component.key)
-              }
-              defaultValue={component.type}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="radio">radio</SelectItem>
-                <SelectItem value="text">text</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Switch
-              id="required"
-              checked={component.required}
-              onCheckedChange={(value) =>
-                handleQuestionRequired(value, component.key)
-              }
-            />
-            <Label htmlFor="required">必填</Label>
-            <div
-              className="cursor-pointer"
+            <div className="flex items-center space-x-2 sm:justify-between">
+              <Select
+                onValueChange={(e: "text" | "radio") =>
+                  handleQuestionType(e, component.key)
+                }
+                defaultValue={component.type}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="radio">選擇題</SelectItem>
+                  <SelectItem value="text">簡答題</SelectItem>
+                </SelectContent>
+              </Select>
+              <div className="flex items-center justify-between space-x-2 sm:space-x-4">
+                <Switch
+                  id="required"
+                  checked={component.required}
+                  onCheckedChange={(value) =>
+                    handleQuestionRequired(value, component.key)
+                  }
+                />
+                <Label className="w-[30px] " htmlFor="required">
+                  必填
+                </Label>
+              </div>
+            </div>
+            <Button
+              type="button"
+              className="w-fit bg-white border-0"
+              variant="ghost"
               onClick={() => deleteQuestion(component.key)}>
               <FaRegTrashCan />
-            </div>
+            </Button>
           </div>
         ))}
-
-        <button>test</button>
+        <div className="flex justify-center">
+          <Button type="submit" variant="ghost" className="w-fit">
+            送出
+          </Button>
+        </div>
       </form>
-      <button onClick={addNewQuestion}>add new question</button>
     </div>
   );
 }
