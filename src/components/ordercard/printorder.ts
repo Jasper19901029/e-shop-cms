@@ -1,4 +1,4 @@
-import { editOrder } from "@/utils/firebase/firebase";
+import { editOrderAfterPrint } from "@/utils/firebase/firebase";
 export const printOrder = async (
   RecipientName: string,
   RecipientMobile: string,
@@ -48,10 +48,10 @@ export const printOrder = async (
     const url = URL.createObjectURL(res1);
     window.open(url, "_blank");
     if (isFinish) {
-      await editOrder(id, (isFinish = isFinish), Memo, OBTNumber);
+      await editOrderAfterPrint(id, (isFinish = isFinish), Memo, OBTNumber);
       return alert("列印成功");
     }
-    await editOrder(id, (isFinish = !isFinish), Memo, OBTNumber);
+    await editOrderAfterPrint(id, (isFinish = !isFinish), Memo, OBTNumber);
     alert("列印成功");
   } catch (error) {
     alert("列印失敗");

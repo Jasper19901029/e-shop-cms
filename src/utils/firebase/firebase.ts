@@ -12,15 +12,12 @@ import {
   onSnapshot,
   query,
   addDoc,
+  collectionGroup,
+  QueryDocumentSnapshot,
+  getDoc,
 } from "firebase/firestore";
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  User,
-  NextOrObserver,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import dayjs from "dayjs";
 
 // Your web app's Firebase configuration
@@ -91,6 +88,14 @@ export type Question = {
   questions: string | string[];
 };
 
+export type FormData = GroupBuyOrder &
+  Question[] & {
+    answer: boolean;
+    url: string;
+    slug: string;
+    createAt: string;
+  };
+
 //上傳圖片到storage並回傳url
 export const uploadToStorage = async (file: File): Promise<string> => {
   // ref 到指定的儲存空間，後面則是完整檔案名稱
@@ -125,7 +130,12 @@ export const addNewProduct = async (product: Product): Promise<void> => {
   }
 };
 
-export const editOrder = async (
+export const editOrder = async (id: string, order: Order): Promise<void> => {
+  const collectionRef = collection(db, "訂單");
+  await updateDoc(doc(collectionRef, id), { order });
+};
+
+export const editOrderAfterPrint = async (
   id: string,
   isFinish: boolean,
   Memo: string,
@@ -157,26 +167,10 @@ export const signInAuthUserWithEmailAndPassword = async (
   return await signInWithEmailAndPassword(auth, email, password);
 };
 
-export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
-  onAuthStateChanged(auth, callback);
-
-export const getCurrentUser = (): Promise<User | null> => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (userAuth) => {
-        unsubscribe();
-        resolve(userAuth);
-      },
-      reject
-    );
-  });
-};
-
 export const addNewGroupBuy = async (
   groupOrderDefault: GroupBuyOrder,
   questions: Question[]
-): Promise<void> => {
+): Promise<boolean> => {
   try {
     const collectionRef = collection(db, "團購");
     const newOrderToDoc = await addDoc(collectionRef, groupOrderDefault).then(
@@ -186,12 +180,53 @@ export const addNewGroupBuy = async (
     );
 
     // await setDoc(doc(collectionRef, newOrderToDoc), { id: newOrderToDoc });
-    await updateDoc(doc(collectionRef, newOrderToDoc), {
+    const updateId = await updateDoc(doc(collectionRef, newOrderToDoc), {
       id: newOrderToDoc,
       questions,
       createAt: dayjs().format("YYYY/MM/DD"),
+      answer: true,
+      slug: newOrderToDoc,
+      url: `https://e-shop-client-alpha.vercel.app/${newOrderToDoc}`,
     });
+    const isDataExists = await getDoc(doc(collectionRef, newOrderToDoc));
+    if (!isDataExists.exists()) return false;
+    return true;
   } catch (error) {
     console.log(error);
   }
+  return true;
+};
+
+export const getGroupFormData = async () => {
+  const collectionRef = collection(db, "團購");
+  const data = (await getDocs(collectionRef)).docs.map((doc) => doc.data());
+  return data as FormData[];
+};
+export const getGroupBuy = async (id: string) => {
+  const collectionRef = collection(db, "團購");
+  const data = (await getDoc(doc(collectionRef, id))).data();
+
+  return data;
+};
+
+export const editIsAnswer = async (
+  id: string | undefined,
+  answer: boolean
+): Promise<void> => {
+  const collectionRef = collection(db, "團購");
+
+  if (answer) {
+    await updateDoc(doc(collectionRef, id), { answer: answer, slug: id });
+  }
+  if (!answer) {
+    await updateDoc(doc(collectionRef, id), { answer: answer, slug: "abc" });
+  }
+};
+
+export const delGroupBuy = async (id: string): Promise<boolean> => {
+  const collectionRef = collection(db, "團購");
+  await deleteDoc(doc(collectionRef, id));
+  const isDataExists = await getDoc(doc(collectionRef, id));
+  if (!isDataExists.exists()) return true;
+  return false;
 };

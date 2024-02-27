@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navigation from "@/components/navigation/navigation";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 import { SignIn } from "@/components/sign-in/signin";
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col lg:flex-row">
-        <SignIn>
-          <Navigation />
-          {children}
-        </SignIn>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <SignIn>
+            <Navigation />
+            {children}
+          </SignIn>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

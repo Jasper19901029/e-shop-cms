@@ -30,7 +30,7 @@ export default function Poductinfo({
       <p className="w-[80px]">{quantity}</p>
       <p className="w-[50px]">{unit}</p>
 
-      <button className="w-[80px]">
+      <button className="w-[80px] pl-6">
         <Link href={`/editinfo/${category}/${productName}`}>編輯</Link>
       </button>
       <button
