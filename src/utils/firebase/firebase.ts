@@ -130,9 +130,15 @@ export const addNewProduct = async (product: Product): Promise<void> => {
   }
 };
 
-export const editOrder = async (id: string, order: Order): Promise<void> => {
+export const editOrder = async (id: string, order: Order): Promise<boolean> => {
   const collectionRef = collection(db, "訂單");
-  await updateDoc(doc(collectionRef, id), { order });
+  try {
+    await updateDoc(doc(collectionRef, id), order).then();
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 };
 
 export const editOrderAfterPrint = async (
