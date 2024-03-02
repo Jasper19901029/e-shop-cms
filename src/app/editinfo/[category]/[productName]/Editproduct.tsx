@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Input from "@/components/input/input";
 import {
   Product,
   editProduct,
@@ -8,6 +7,9 @@ import {
 } from "@/utils/firebase/firebase";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 export default function EditProduct({
   productName,
@@ -94,50 +96,87 @@ export default function EditProduct({
   };
 
   return (
-    <div>
-      <form
-        onSubmit={onSubmitToFirebase}
-        className="flex flex-col space-y-6 lg:space-y-10 items-center">
-        <div className="flex flex-col space-y-6 lg:space-y-10">
-          <p>
-            產品名稱: <span className="ml-4">{productName}</span>
-          </p>
+    <form onSubmit={onSubmitToFirebase} className="flex flex-row space-x-10">
+      <div className="flex flex-col space-y-12">
+        <p>
+          產品名稱: <span className="ml-4">{productName}</span>
+        </p>
+        <div className="flex items-center">
+          <Label htmlFor="price" className="w-[100px]">
+            產品金額:
+          </Label>
           <Input
-            label="產品價格"
             id="price"
             name="price"
             type="text"
-            htmlFor="price"
             placeholder={`現在的金額:${price}元/${unit}`}
             onChange={handlerChange}
           />
+        </div>
+        <div className="flex items-center">
+          <Label htmlFor="quantity" className="w-[100px]">
+            產品數量:
+          </Label>
           <Input
-            label="產品數量"
             id="quantity"
             name="quantity"
             type="text"
-            htmlFor="quantity"
             placeholder={`現在的數量:${quantity}${unit}`}
             onChange={handlerChange}
           />
-
-          <div className="flex flex-row">
-            <label htmlFor="introduction" className="self-center mr-4">
-              產品介紹:
-            </label>
-            <textarea
-              id="introduction"
-              onChange={handleTextAreaChange}
-              name="introduction"
-              defaultValue={introduction}
-              className="w-[250px] h-[60px] border-2 border-slider border-black resize-none rounded-[8px] lg:w-[500px] lg:h-[150px] focus:outline-none focus:border-blue-500"
+        </div>
+        <div className="flex flex-row">
+          <label htmlFor="introduction" className="self-center mr-4">
+            產品介紹:
+          </label>
+          <textarea
+            id="introduction"
+            onChange={handleTextAreaChange}
+            name="introduction"
+            defaultValue={introduction}
+            className="w-[250px] h-[60px] border-2 border-slider border-black resize-none rounded-[8px] lg:w-[500px] lg:h-[150px] focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="flex items-center">
+          <Label className="w-[100px] mr-8">開放訂購:</Label>
+          <div className="flex mr-8">
+            <Input
+              id="是"
+              name="isSell"
+              type="radio"
+              value="true"
+              onChange={handlerChange}
+              required
+              className="h-4"
+              checked={productField.isSell === true}
             />
+            <Label htmlFor="是" className="">
+              是
+            </Label>
+          </div>
+          <div className="flex">
+            <Input
+              id="否"
+              name="isSell"
+              type="radio"
+              value="false"
+              onChange={handlerChange}
+              required
+              className="h-4"
+              checked={productField.isSell === false}
+            />
+            <Label htmlFor="否">否</Label>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row">
-          <label htmlFor="productUrl" className="">
-            產品圖片上傳:
-            <input
+        <Button variant={"ghost"}>確定修改</Button>
+      </div>
+      <div className="flex flex-col">
+        <div className="flex flex-col justify-center items-center">
+          <div className="flex items-center">
+            <Label htmlFor="productUrl" className="w-[150px]">
+              產品圖片上傳:
+            </Label>
+            <Input
               className=""
               id="productUrl"
               name="productUrl"
@@ -145,12 +184,16 @@ export default function EditProduct({
               ref={productImageRef}
               onChange={handleInputToStorage}
             />
-            <Image src={productUrl} width={300} height={300} alt="hi" />
-          </label>
+          </div>
+          <Image src={productUrl} width={150} height={150} alt="hi" />
+        </div>
 
-          <label htmlFor="inspectionUrl1" className="">
-            檢驗報告上傳:
-            <input
+        <div className="flex flex-col justify-center items-center">
+          <div className="flex items-center">
+            <Label htmlFor="inspectionUrl1" className="w-[150px]">
+              檢驗報告上傳:
+            </Label>
+            <Input
               className=""
               id="inspectionUrl1"
               name="inspectionUrl1"
@@ -158,14 +201,17 @@ export default function EditProduct({
               ref={inspectionImage1Ref}
               onChange={handleInputToStorage}
             />
-            {inspectionUrl1 && (
-              <Image src={inspectionUrl1} width={300} height={300} alt="hi" />
-            )}
-          </label>
-
-          <label htmlFor="inspectionUrl2" className="">
-            檢驗報告上傳:
-            <input
+          </div>
+          {inspectionUrl1 && (
+            <Image src={inspectionUrl1} width={150} height={150} alt="hi" />
+          )}
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <div className="flex items-center">
+            <Label htmlFor="inspectionUrl2" className="w-[150px]">
+              檢驗報告上傳:
+            </Label>
+            <Input
               className=""
               id="inspectionUrl2"
               name="inspectionUrl2"
@@ -173,42 +219,12 @@ export default function EditProduct({
               ref={inspectionImage2Ref}
               onChange={handleInputToStorage}
             />
-            {inspectionUrl2 && (
-              <Image src={inspectionUrl2} width={300} height={300} alt="hi" />
-            )}
-          </label>
+          </div>
+          {inspectionUrl2 && (
+            <Image src={inspectionUrl2} width={150} height={150} alt="hi" />
+          )}
         </div>
-        <fieldset className="">
-          <legend>
-            開放訂購:
-            <Input
-              label="是"
-              id="是"
-              name="isSell"
-              type="radio"
-              htmlFor="是"
-              value="true"
-              onChange={handlerChange}
-              required
-              checked={productField.isSell === true}
-            />
-            <Input
-              label="否"
-              id="否"
-              name="isSell"
-              type="radio"
-              htmlFor="否"
-              value="false"
-              onChange={handlerChange}
-              required
-              checked={productField.isSell === false}
-            />
-          </legend>
-        </fieldset>
-        <button className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px] text-[20px]">
-          確定修改
-        </button>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }

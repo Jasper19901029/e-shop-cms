@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Order, editOrder } from "@/utils/firebase/firebase";
 import {
   Tooltip,
@@ -58,27 +58,39 @@ export default function EditOrder({
     createDate,
     id,
   });
+
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setOrderFiled({ ...orderField, [name]: value });
   };
 
-  const handleIsCollection = (e: "Y" | "N") => {
-    if (e === "Y") {
-      setOrderFiled({
+  const handleIsCollection = (value: string) => {
+    if (value === "Y") {
+      return setOrderFiled({
         ...orderField,
-        ["IsCollection"]: e,
+        ["IsCollection"]: value,
         ["CollectionAmount"]: totalPrice,
       });
     }
-    if (e === "N") {
-      setOrderFiled({
+    if (value === "N") {
+      return setOrderFiled({
         ...orderField,
-        ["IsCollection"]: e,
+        ["IsCollection"]: value,
         ["CollectionAmount"]: 0,
       });
     }
+    setOrderFiled({
+      ...orderField,
+      ["DeliveryTime"]: value,
+    });
   };
+  const handleDeliveryTime = (value: string) => {
+    setOrderFiled({
+      ...orderField,
+      ["DeliveryTime"]: value,
+    });
+  };
+
   const handleEditOrderSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -137,37 +149,35 @@ export default function EditOrder({
                   onChange={handleOnChange}
                 />
               </div>
-              <TooltipProvider>
-                <div className="flex space-x-2 items-center">
-                  <Label className="w-[100px]" htmlFor={DeliveryTime}>
-                    送貨時間
-                  </Label>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Input
-                        id={DeliveryTime}
-                        name="DeliveryTime"
-                        type="text"
-                        defaultValue={DeliveryTime}
-                        onChange={handleOnChange}
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>01: 13時前 02: 14-18時 04: 不指定</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-              </TooltipProvider>
+
+              <div className="flex space-x-2 items-center">
+                <Label className="w-[100px]" htmlFor="DeliveryTime">
+                  送貨時間
+                </Label>
+                <Select
+                  name="DeliveryTime"
+                  onValueChange={handleIsCollection}
+                  defaultValue={orderField.DeliveryTime}>
+                  <SelectTrigger className="w-full h-8">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="01">13時前</SelectItem>
+                    <SelectItem value="02">14-18時</SelectItem>
+                    <SelectItem value="04">不指定</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
               <div className="flex space-x-2 items-center">
                 <Label className="w-[100px]" htmlFor={IsCollection}>
-                  貨到付款
+                  付款方式
                 </Label>
                 <Select
                   name="IsCollection"
                   onValueChange={handleIsCollection}
                   defaultValue={orderField.IsCollection}>
-                  <SelectTrigger className="w-[180px] h-8">
+                  <SelectTrigger className="w-full h-8">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -176,28 +186,20 @@ export default function EditOrder({
                   </SelectContent>
                 </Select>
               </div>
-              <TooltipProvider>
-                <div className="flex space-x-2 items-center">
-                  <Label className="w-[100px]" htmlFor={"CollectionAmount"}>
-                    代收金額
-                  </Label>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Input
-                        id="CollectionAmount"
-                        name="CollectionAmount"
-                        type="number"
-                        value={orderField.IsCollection === "Y" ? totalPrice : 0}
-                        onChange={handleOnChange}
-                        disabled
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>若貨到付款為"Y"輸入代收貨款金額，否則填0</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-              </TooltipProvider>
+              <div className="flex space-x-2 items-center">
+                <Label className="w-[100px]" htmlFor={"CollectionAmount"}>
+                  代收金額
+                </Label>
+                <Input
+                  id="CollectionAmount"
+                  name="CollectionAmount"
+                  type="number"
+                  value={orderField.IsCollection === "Y" ? totalPrice : 0}
+                  onChange={handleOnChange}
+                  disabled
+                />
+              </div>
+
               <Input
                 id="isFinish"
                 name="isFinish"

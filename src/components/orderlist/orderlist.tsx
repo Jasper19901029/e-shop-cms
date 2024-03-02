@@ -6,8 +6,6 @@ import {
   Table,
   TableBody,
   TableCaption,
-  TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -24,7 +22,6 @@ export default function OrderList({
     .sort((a, b) => Number(b.createDate) - Number(a.createDate));
 
   return (
-    // <div className="flex flex-row flex-wrap">
     <Table className="w-full">
       <TableCaption>訂單資訊</TableCaption>
       <TableHeader>
@@ -54,6 +51,5 @@ export default function OrderList({
             ))}
       </TableBody>
     </Table>
-    // </div>
   );
 }

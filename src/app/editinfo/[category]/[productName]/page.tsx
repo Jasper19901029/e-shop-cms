@@ -14,7 +14,6 @@ export default function Page({
   const filterData = productData.productData?.filter(
     (product) => product.productName === decodeURI(productName)
   );
-  console.log(filterData);
 
   return (
     <div>

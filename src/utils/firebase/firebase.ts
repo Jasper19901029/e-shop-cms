@@ -48,7 +48,7 @@ export type Product = {
   inspectionUrl2?: string;
   category: string;
   introduction: string;
-  isSell: boolean | null;
+  isSell: boolean;
   OBTNumber?: string;
 };
 
@@ -201,6 +201,24 @@ export const addNewGroupBuy = async (
     console.log(error);
   }
   return true;
+};
+
+export const updateGroupBuy = async (
+  id: string,
+  groupOrderDefault: GroupBuyOrder,
+  questions: Question[]
+): Promise<boolean> => {
+  try {
+    const collectionRef = collection(db, "團購");
+    const updateId = await updateDoc(doc(collectionRef, id), {
+      groupOrderDefault,
+      questions,
+    });
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 };
 
 export const getGroupFormData = async () => {

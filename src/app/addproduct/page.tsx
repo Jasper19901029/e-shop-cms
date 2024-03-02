@@ -5,7 +5,8 @@ import {
   Product,
   addNewProduct,
 } from "@/utils/firebase/firebase";
-import Input from "@/components/input/input";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const defaultField: Product = {
   productName: "",
@@ -18,7 +19,7 @@ const defaultField: Product = {
   inspectionUrl1: "",
   inspectionUrl2: "",
   introduction: "",
-  isSell: null,
+  isSell: true,
 };
 
 export default function AddProduct(): ReactNode {
@@ -119,195 +120,222 @@ export default function AddProduct(): ReactNode {
   };
 
   return (
-    <div className="mt-4">
-      <form
-        onSubmit={onSubmitToFirebase}
-        className="flex flex-col space-y-6 lg:space-y-10">
+    <form
+      onSubmit={onSubmitToFirebase}
+      className="flex flex-col space-y-6 lg:space-y-10 mt-4 mb-4">
+      <div className="flex flex-row items-center">
+        <Label htmlFor="productName" className="w-[100px]">
+          產品名字
+        </Label>
         <Input
-          label="產品名字"
           id="productName"
           name="productName"
           type="text"
-          htmlFor="productName"
           placeholder="請輸入產品名字"
           value={productName}
           onChange={handlerChange}
           required
         />
+      </div>
+
+      <div className="flex flex-row items-center">
+        <Label htmlFor="price" className="w-[100px]">
+          產品價格
+        </Label>
         <Input
-          label="產品價格"
           id="price"
           name="price"
           type="number"
-          htmlFor="price"
           placeholder="請輸入產品價格"
           value={price === 0 ? "" : price}
           onChange={handlerChange}
           required
         />
+      </div>
+
+      <div className="flex flex-row items-center">
+        <Label htmlFor="unit" className="w-[100px]">
+          產品單位
+        </Label>
         <Input
-          label="產品單位"
           id="unit"
           name="unit"
           type="text"
-          htmlFor="unit"
           placeholder="請輸入產品單位"
           value={unit}
           onChange={handlerChange}
           required
         />
+      </div>
+
+      <div className="flex flex-row items-center">
+        <Label htmlFor="type" className="w-[100px]">
+          產品種類
+        </Label>
         <Input
-          label="產品類別"
           id="type"
           name="type"
           type="text"
-          htmlFor="type"
-          placeholder="請輸入產品類別"
+          placeholder="請輸入產品種類"
           value={type}
           onChange={handlerChange}
           required
         />
+      </div>
+
+      <div className="flex flex-row items-center">
+        <Label htmlFor="quantity" className="w-[100px]">
+          產品數量
+        </Label>
         <Input
-          label="產品數量"
           id="quantity"
           name="quantity"
           type="number"
-          htmlFor="quantity"
           placeholder="請輸入產品數量"
           min={0}
           value={quantity === 0 ? "" : quantity}
           onChange={handlerChange}
           required
         />
+      </div>
 
-        <fieldset className="">
-          <legend>
-            產品類別:
+      <fieldset className="">
+        <legend className="flex flex-row items-center">
+          產品類別:
+          <div className="flex flex-row items-center">
             <Input
-              label="水果"
+              className="h-4"
               id="水果"
               name="category"
               type="radio"
-              htmlFor="水果"
               value="水果"
               onChange={handlerChange}
               required
               checked={category === "水果"}
             />
+            <Label htmlFor="水果" className="w-[100px]">
+              水果
+            </Label>
+          </div>
+          <div className="flex flex-row items-center">
             <Input
-              label="果乾"
+              className="h-4"
               id="果乾"
               name="category"
               type="radio"
-              htmlFor="果乾"
               value="果乾"
               onChange={handlerChange}
               required
               checked={category === "果乾"}
             />
-          </legend>
-        </fieldset>
+            <Label htmlFor="果乾" className="w-[100px]">
+              果乾
+            </Label>
+          </div>
+        </legend>
+      </fieldset>
 
-        <div className="flex flex-row">
-          <label htmlFor="introduction" className="self-center mr-4">
-            產品介紹:
-          </label>
-          <textarea
-            id="introduction"
-            onChange={handleTextAreaChange}
-            name="introduction"
-            value={introduction}
-            className="w-[250px] h-[60px] border-2 border-slider border-black resize-none rounded-[8px] lg:w-[500px] lg:h-[150px] focus:outline-none focus:border-blue-500"
-            placeholder="請輸入產品介紹"
-            required
-          />
-        </div>
-        <div className="flex flex-col space-y-2">
-          <label className="">
-            產品圖片上傳:{" "}
-            <input
-              className=""
-              id="productUrl"
-              name="productUrl"
-              type="file"
-              key={productImageKey}
-              ref={productImageRef}
-              onChange={handleInputToStorage}
-              required
-              accept=".jpg, .jpeg, .png, .webp"
-            />
-          </label>
+      <div className="flex flex-row">
+        <label htmlFor="introduction" className="self-center mr-4">
+          產品介紹:
+        </label>
+        <textarea
+          id="introduction"
+          onChange={handleTextAreaChange}
+          name="introduction"
+          value={introduction}
+          className="w-[250px] h-[60px] border-2 border-slider border-black resize-none rounded-[8px] lg:w-[500px] lg:h-[150px] focus:outline-none focus:border-blue-500"
+          placeholder="請輸入產品介紹"
+          required
+        />
+      </div>
+      <div className="flex flex-col space-y-2">
+        <Label className="mb-2">產品圖片上傳: </Label>
+        <Input
+          className=""
+          id="productUrl"
+          name="productUrl"
+          type="file"
+          key={productImageKey}
+          ref={productImageRef}
+          onChange={handleInputToStorage}
+          required
+          accept=".jpg, .jpeg, .png, .webp"
+        />
 
-          <label className="">
-            檢驗報告上傳:{" "}
-            <input
-              className=""
-              id="inspectionUrl1"
-              name="inspectionUrl1"
-              type="file"
-              key={inspectionImage1Key}
-              ref={inspectionImage1Ref}
-              onChange={handleInputToStorage}
-              required
-              accept=".jpg, .jpeg, .png, .webp"
-            />
-          </label>
+        <Label className="mb-2">檢驗報告上傳: </Label>
+        <Input
+          className=""
+          id="inspectionUrl1"
+          name="inspectionUrl1"
+          type="file"
+          key={inspectionImage1Key}
+          ref={inspectionImage1Ref}
+          onChange={handleInputToStorage}
+          required
+          accept=".jpg, .jpeg, .png, .webp"
+        />
 
-          <label className="">
-            檢驗報告上傳:{" "}
-            <input
-              className=""
-              id="inspectionUrl2"
-              name="inspectionUrl2"
-              type="file"
-              key={inspectionImage2Key}
-              ref={inspectionImage2Ref}
-              onChange={handleInputToStorage}
-              required
-              accept=".jpg, .jpeg, .png, .webp"
-            />
-          </label>
-        </div>
+        <Label className="mb-2">檢驗報告上傳: </Label>
+        <Input
+          className=""
+          id="inspectionUrl2"
+          name="inspectionUrl2"
+          type="file"
+          key={inspectionImage2Key}
+          ref={inspectionImage2Ref}
+          onChange={handleInputToStorage}
+          required
+          accept=".jpg, .jpeg, .png, .webp"
+        />
+      </div>
 
-        <fieldset className="">
-          <legend>
-            開放訂購:
+      <fieldset className="">
+        <legend className="flex flex-row items-center">
+          開放訂購:
+          <div className="flex flex-row items-center">
             <Input
-              label="是"
+              className="h-4"
               id="是"
               name="isSell"
               type="radio"
-              htmlFor="是"
               value="true"
               onChange={handlerChange}
               required
               checked={productField.isSell === true}
             />
+            <Label htmlFor="是" className="w-[100px]">
+              是
+            </Label>
+          </div>
+          <div className="flex flex-row items-center">
             <Input
-              label="否"
+              className="h-4"
               id="否"
               name="isSell"
               type="radio"
-              htmlFor="否"
               value="false"
               onChange={handlerChange}
               required
               checked={productField.isSell === false}
             />
-          </legend>
-        </fieldset>
+            <Label htmlFor="否" className="w-[100px]">
+              否
+            </Label>
+          </div>
+        </legend>
+      </fieldset>
 
-        <div className="flex flex-row justify-around text-[20px]">
-          <button className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px]">
-            新增產品
-          </button>
-          <button
-            className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px]"
-            onClick={reset}>
-            清空
-          </button>
-        </div>
-      </form>
-    </div>
+      <div className="flex flex-row justify-around text-[20px]">
+        <button className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px]">
+          新增產品
+        </button>
+        <button
+          className="border-2 border-slider border-black hover:text-white hover:bg-black rounded-[4px]"
+          onClick={reset}>
+          清空
+        </button>
+      </div>
+    </form>
   );
 }
