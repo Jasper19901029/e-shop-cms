@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Product, delProduct, editIsSell } from "@/utils/firebase/firebase";
 import { ReactNode, useState } from "react";
@@ -79,11 +80,17 @@ export function ConfirmDelete({
   productName: string;
   category: string;
 }): ReactNode {
+  console.log(category, productName);
   const checkDelete = async (
     category: string,
     productName: string
   ): Promise<void> => {
-    await delProduct(category, productName);
+    try {
+      const hello = await delProduct({ category, name: productName });
+      console.log(hello);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Dialog>

@@ -151,12 +151,21 @@ export const editOrderAfterPrint = async (
   await updateDoc(doc(collectionRef, id), { isFinish, Memo, OBTNumber });
 };
 
-export const delProduct = async (
-  name: string,
-  category: string
-): Promise<void> => {
-  const collectionRef = collection(db, category);
-  deleteDoc(doc(collectionRef, name));
+export const delProduct = async ({
+  name,
+  category,
+}: {
+  name: string;
+  category: string;
+}): Promise<void> => {
+  try {
+    const collectionRef = collection(db, category);
+    const hello = await deleteDoc(doc(collectionRef, name));
+    // const hello = await deleteDoc(doc(db, category, {name: name}));
+    console.log(hello);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const delOrder = async (id: string): Promise<void> => {
