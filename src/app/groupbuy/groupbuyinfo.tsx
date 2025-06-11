@@ -43,8 +43,10 @@ export default function GroupBuyInfo({
     }
   };
 
-  const toggleIsAnswer = async (id: string | undefined, answer: boolean) => {
-    await editIsAnswer(id, !switchChecked);
+  const toggleIsAnswer = async (id?: string) => {
+    const next = !switchChecked;
+    setSwitchChecked(next);
+    await editIsAnswer(id, next);
   };
   return (
     <div className="mx-8 flex flex-col odd:bg-gray-200 even:bg-gray-100 mb-8">
@@ -61,12 +63,9 @@ export default function GroupBuyInfo({
               ? "w-[100px] bg-green-500 mt-2 hover:bg-green-300"
               : "w-[100px] bg-red-500 mt-2 hover:bg-red-300"
           }
-          onClick={() => toggleIsAnswer(id, switchChecked)}>
+          onClick={() => toggleIsAnswer(id)}>
           關
-          <Switch
-            checked={switchChecked}
-            onChange={() => setSwitchChecked(!switchChecked)}
-          />
+          <Switch checked={switchChecked} onChange={() => null} />
           開
         </Button>
         <Button
