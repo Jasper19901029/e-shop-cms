@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import Poductinfo from "./Poductinfo";
+import ProductInfo from "./ProductInfo";
 import { useGetProduct } from "./getData";
 import {
   Table,
@@ -33,13 +33,13 @@ export default function EditInfo(): ReactNode {
         {driedFruitProduct.productData &&
           driedFruitProduct.productData.map((product) => (
             <TableRow key={product.productName}>
-              <Poductinfo key={product.productName} {...product} />
+              <ProductInfo key={product.productName} {...product} />
             </TableRow>
           ))}
         {fruitProduct.productData &&
           fruitProduct.productData.map((product) => (
             <TableRow key={product.productName}>
-              <Poductinfo key={product.productName} {...product} />
+              <ProductInfo key={product.productName} {...product} />
             </TableRow>
           ))}
       </TableBody>
