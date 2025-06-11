@@ -20,7 +20,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default function ProductInfo({
+export default function Poductinfo({
   productName,
   price,
   quantity,

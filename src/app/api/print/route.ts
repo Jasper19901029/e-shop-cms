@@ -56,7 +56,7 @@ const orders = [
   },
 ];
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, res: NextResponse) {
   const {
     RecipientName,
     RecipientMobile,
