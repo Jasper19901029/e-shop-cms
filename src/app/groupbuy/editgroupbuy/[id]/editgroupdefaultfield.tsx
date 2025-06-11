@@ -47,7 +47,7 @@ export default function Editgroupdefaultfield({
           required
           id="groupBuyProduct"
           name="groupBuyProduct"
-          value={groupDefault.groupBuyProduct}
+          value={groupDefault.groupBuyOwner}
           onChange={handleGroupDefault}
         />
       </div>

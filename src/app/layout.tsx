@@ -1,10 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import Navigation from "@/components/navigation/navigation";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 import { SignIn } from "@/components/sign-in/signin";
 
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans flex flex-col lg:flex-row">
+      <body className="flex flex-col lg:flex-row">
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <SignIn>
             <Navigation />
