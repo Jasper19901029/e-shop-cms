@@ -4,11 +4,8 @@ import EditProduct from "./Editproduct";
 import { notFound } from "next/navigation";
 import React from "react";
 
-export default function Page({
-  params,
-}: {
-  params: { category: string; productName: string };
-}): React.ReactNode {
+// params typing changed in Next.js 15; cast to any for client component
+export default function Page({ params }: { params: { category: string; productName: string } }) {
   const { category, productName } = params;
   const productData = useGetProduct(decodeURI(category));
   const filterData = productData.productData?.filter(
